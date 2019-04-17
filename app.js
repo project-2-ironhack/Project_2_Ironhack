@@ -9,8 +9,8 @@ const sassMiddleware = require('node-sass-middleware');
 require('./config/hbs.config')
 require('./config/db.config');
 
-const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
+const authRouter = require('./routes/auth.routes');
+
 
 const app = express();
 
@@ -30,8 +30,12 @@ app.use(sassMiddleware({
 }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+
+//cambiar esta redirección para mostrar bien la landing page
+app.get('/', (req,res,next) => {
+  res.redirect('/register')
+});
+app.use('/',authRouter)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
