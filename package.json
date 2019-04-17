@@ -3,7 +3,9 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "node ./bin/www",
+    "dev": "DEBUG=lab-ex-profile:* nodemon -e hbs,js,css,.env ./bin/www"
+
   },
   "dependencies": {
     "bcrypt": "^3.0.6",
