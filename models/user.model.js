@@ -21,7 +21,7 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: [true,'Password is required'],
     // Estaría bien meter aquí un match alfanumérico
-    minlength: [8, 'Password needs at last 8 chars']
+    minlength: [8, 'Password needs at last 8 chars'] 
   },
     avatarURL: String
 },{timestamps:true})

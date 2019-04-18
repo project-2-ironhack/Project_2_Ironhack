@@ -4,12 +4,15 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const sassMiddleware = require('node-sass-middleware');
+const session = require('./config/session.config')
+const passport = require ('passport')
 
-
+require('./config/passport.config');
 require('./config/hbs.config')
 require('./config/db.config');
 
 const authRouter = require('./routes/auth.routes');
+const userRouter = require('./routes/user.routes');
 
 
 const app = express();
@@ -30,12 +33,22 @@ app.use(sassMiddleware({
 }));
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(session);
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.use((req, res, next) => {
+  res.locals.path = req.path;
+  res.locals.session = req.user;
+  next();
+})
 
 //cambiar esta redirección para mostrar bien la landing page
 app.get('/', (req,res,next) => {
-  res.redirect('/register')
+  res.redirect('/login')
 });
 app.use('/',authRouter)
+app.use('/',userRouter)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
