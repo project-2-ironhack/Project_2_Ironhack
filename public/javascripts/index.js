@@ -1,4 +1,5 @@
 function initMap() {
+  console.log('initMap')
   const mapContainer = document.getElementById("map")
   if (!mapContainer) return;
   
