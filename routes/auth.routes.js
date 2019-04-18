@@ -6,6 +6,7 @@ router.get('/register', authController.register);
 router.post('/register', authController.doRegister)
 
 router.get('/login', authController.login);
+router.get('/logout', authController.logout);
 router.post('/login', authController.doLogin)
 
 //actualizar si da tiempo a ES6
