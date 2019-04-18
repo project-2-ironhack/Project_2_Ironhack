@@ -1,0 +1,13 @@
+<a href="/places/new">Go to create a new place</a>
+<div class="row" id="place-list">
+    <div class="col">
+      <div class="list-group">
+        {{#each places as |place|}}
+          {{>singlePlace place=place}}
+        {{/each}}
+      </div>
+    </div>
+    <div class="col">
+      <div id="map" width="100%" height="400px"></div>
+    </div>
+</div>

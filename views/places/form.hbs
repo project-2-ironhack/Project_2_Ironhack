@@ -1,0 +1,76 @@
+<div id="places-form" {{#if place._id}} data-id="{{place._id}}" {{/if}}>
+  {{#if errors}}
+  <div class="alert alert-danger" role="alert">
+    review the form data
+  </div>
+  {{/if}}
+
+  <div class="row">
+    <div class="col">
+  {{#if place.isNew}}
+    <form action="/places" method="POST">
+  {{else}}
+    <form action="/places/{{place._id}}" method="POST">
+  {{/if}}
+
+    <div class="form-group">
+      <label>Place name</label>
+      <input type="text" class="form-control {{#if errors.name }}is-invalid{{/if}}" name="name" value="{{place.name}}"
+        placeholder="Enter place name">
+
+      {{#if errors.name }}
+      <div class="invalid-feedback">
+        {{errors.name}}
+      </div>
+      {{/if}}
+    </div>
+
+   <div class="form-group">
+      <label>Main Category</label>
+      <select name="type" class="form-control">
+        {{#each categories as |category|}}
+          <option value="{{category}}"
+          {{#isMainCategory ../place category }}selected{{/isMainCategory}}>
+            {{category}}
+          </option>
+        {{/each}} 
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>place latitude</label>
+      <input type="text" class="form-control {{#if errors.latitude }}is-invalid{{/if}}" name="latitude" 
+        value="{{place.location.coordinates.[1]}}" placeholder="Enter place latitude" id="lat">
+    
+      {{#if errors.latitude }}
+      <div class="invalid-feedback">
+        {{errors.latitude}}
+      </div>
+      {{/if}}
+    </div>
+
+    <div class="form-group">
+      <label>place longitude</label>
+      <input type="text" class="form-control {{#if errors.longitude }}is-invalid{{/if}}" name="longitude"
+        value="{{place.location.coordinates.[0]}}" placeholder="Enter place longitude" id="lng">
+    
+      {{#if errors.longitude }}
+      <div class="invalid-feedback">
+        {{errors.longitude}}
+      </div>
+      {{/if}}
+    </div>
+
+
+    <div class="d-flex">
+      <button type="submit" class="btn btn-primary mr-3">Submit</button>
+      <a class="btn btn-secondary" href="/places">Back</a>
+    </div>
+  </form>
+  </div>
+
+  <div class="col">
+    <div id="map"></div>
+  </div>
+  </div>
+</div>

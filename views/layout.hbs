@@ -7,9 +7,15 @@
      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" 
      integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
     <link rel='stylesheet' href='/stylesheets/style.css' />
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="/javascripts/my-map.js"></script>
+    <script src="/javascripts/index.js"></script>
   </head>
   <body>
     {{>navbar}}
     {{{body}}}
+
   </body>
+  <script
+    src="https://maps.googleapis.com/maps/api/js?v=quarterly&key=AIzaSyBD3uxK2swjogbpLfQwItu7TqEpaVS5w3E&callback=initMap"></script>
 </html>
