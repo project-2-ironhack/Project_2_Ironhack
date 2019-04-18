@@ -1,0 +1,16 @@
+<a href="/places/{{ place.id }}" class="list-group-item list-group-item-action">
+  <div class="d-flex w-100 justify-content-between">
+    <h5 class="mb-1">{{ place.name }}</h5>
+    <small>{{ place.authors.[0] }}</small>
+  </div>
+  <small>
+    <p class="mb-1">{{ place.type }}</p>    
+  </small>
+{{!-- 
+  <div>
+    <button class="btn btn-sm btn-secondary" onclick="onClickLikeplace(event)"
+      data-place-id="{{place._id}}">
+      {{ place.likes }} Likes
+    </button>
+  </div> --}}
+</a>
