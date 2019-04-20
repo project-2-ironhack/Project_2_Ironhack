@@ -6,16 +6,26 @@ const placeSchema = new mongoose.Schema({
   },
   type : {
     type: [String],
-    enum: ['coffeshop', 'bookstore'],
+    enum: ['coffeshop', 'bookstore', 'FeatureCollection'],
     required: true   
   },
-  location: {
+  geometry: { //location
     type: { type: String },
     coordinates: [Number]
+  }, 
+  propertiesSchema : { 
+    phoneFormatted : String,
+    phone: String,
+    address: String,
+    city: String,
+    country: String,
+    crossStreet: String,
+    postalCode: String,
+    state: String,
   }
 },{ timestamps: true });
 
-placeSchema.index({ location: '2dsphere' });
+placeSchema.index({ geometry: '2dsphere' });
 
 const Place = mongoose.model('Place', placeSchema);
 

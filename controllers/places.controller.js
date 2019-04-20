@@ -14,14 +14,14 @@ module.exports.list = (req, res, next) => {
 
 module.exports.create = (req, res, next) => {
   const place = new Place();
-  res.render('places/form', {categories: PLACE_CATEGORIES, place })
+  res.render('places/form', {categories: PLACE_CATEGORIES, place, showGoogleMap:true })
 }
 
 module.exports.doCreate = (req, res, next) => {
   const place = new Place({
     name: req.body.name,
     type: req.body.type,
-    location: {
+    geometry: {
       type: 'Point',
       coordinates: [req.body.longitude, req.body.latitude]
     }
@@ -33,7 +33,8 @@ module.exports.doCreate = (req, res, next) => {
         res.render('places/form', {
           place,
           categories: PLACE_CATEGORIES,
-          ...error
+          ...error, 
+          showGoogleMap:true
         })
       } else {
         next(error)
@@ -59,7 +60,7 @@ module.exports.edit = (req, res, next) => {
 
 module.exports.doEdit = (req, res, next) => {
   const id = req.params.id;
-  req.body.location = {
+  req.body.geometry = {
     type: 'Point',
     coordinates: [req.body.longitude, req.body.latitude]
   }
@@ -105,7 +106,7 @@ module.exports.editCoordinates = (req, res, next) => {
   Place.findById(id)
     .then(place => {
       if (place) {
-        res.json(place.location.coordinates)
+        res.json(place.geometry.coordinates)
       } else {
         //I hope not get into this... 
         next(createError(404, 'Place not found'))
@@ -116,7 +117,7 @@ module.exports.editCoordinates = (req, res, next) => {
 
 module.exports.coordinates = (req, res, next) => {
   Place.find()
-    .then((places) => res.json(places.map(u => u.location)))
+    .then((places) => res.json(places.map(u => u.geometry)))
     .catch(next)
 }
 

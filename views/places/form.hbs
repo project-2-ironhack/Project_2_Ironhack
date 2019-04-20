@@ -40,7 +40,7 @@
     <div class="form-group">
       <label>place latitude</label>
       <input type="text" class="form-control {{#if errors.latitude }}is-invalid{{/if}}" name="latitude" 
-        value="{{place.location.coordinates.[1]}}" placeholder="Enter place latitude" id="lat">
+        value="{{place.geometry.coordinates.[1]}}" placeholder="Enter place latitude" id="lat">
     
       {{#if errors.latitude }}
       <div class="invalid-feedback">
@@ -52,7 +52,7 @@
     <div class="form-group">
       <label>place longitude</label>
       <input type="text" class="form-control {{#if errors.longitude }}is-invalid{{/if}}" name="longitude"
-        value="{{place.location.coordinates.[0]}}" placeholder="Enter place longitude" id="lng">
+        value="{{place.geometry.coordinates.[0]}}" placeholder="Enter place longitude" id="lng">
     
       {{#if errors.longitude }}
       <div class="invalid-feedback">
