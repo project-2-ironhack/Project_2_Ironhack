@@ -7,6 +7,7 @@
     "dev": "DEBUG=PROJECT_2_IRONHACK:* nodemon -e hbs,js,css,.env ./bin/www"
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "bcrypt": "^3.0.6",
     "connect-mongo": "^2.0.3",
     "cookie-parser": "~1.4.3",
@@ -20,7 +21,8 @@
     "morgan": "~1.9.0",
     "node-sass-middleware": "0.11.0",
     "passport": "^0.4.0",
-    "passport-local": "^1.0.0"
+    "passport-local": "^1.0.0",
+    "qs": "^6.7.0"
   },
   "devDependencies": {
     "nodemon": "^1.18.11"

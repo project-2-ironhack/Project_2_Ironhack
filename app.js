@@ -13,7 +13,8 @@ require('./config/db.config');
 
 const authRouter = require('./routes/auth.routes');
 const userRouter = require('./routes/user.routes');
-const placesRouter = require('./routes/places.routes')
+// const placesRouter = require('./routes/places.routes')
+const dashBoardRouter = require('./routes/dash.routes')
 
 
 
@@ -51,7 +52,8 @@ app.get('/', (req,res,next) => {
 });
 app.use('/',authRouter)
 app.use('/',userRouter)
-app.use('/places', placesRouter)
+// app.use('/places', placesRouter)
+app.use('/editDashboard', dashBoardRouter)
 
 
 // catch 404 and forward to error handler
