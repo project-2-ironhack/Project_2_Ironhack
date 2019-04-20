@@ -51,7 +51,7 @@ module.exports.doLogin = (req, res, next) => {
         if(err) {
           next(err)
         } else {
-          res.redirect('/places')
+          res.redirect('/mapbox')
         }
       })
     }
