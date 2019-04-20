@@ -1,5 +1,5 @@
 const createError = require('http-errors');
 
 module.exports.dashboard = (req, res, next) => {
-  res.render('maps/mapbox')
+  res.render('maps/mapbox', {showMap: true})
 }
