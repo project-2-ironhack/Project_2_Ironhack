@@ -11,14 +11,15 @@
     {{#if showMap}}
       {{>mapboxScripts}}
     {{/if}}
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <script src="/javascripts/my-map.js"></script>
-    <script src="/javascripts/index.js"></script>
+    {{#if showGoogleMap}}
+      {{>googleMapScripts}}
+    {{/if}}
   </head>
   <body>
     {{>navbar}}
     {{{body}}}
   </body>
-  <script
-    src="https://maps.googleapis.com/maps/api/js?v=quarterly&key=AIzaSyBD3uxK2swjogbpLfQwItu7TqEpaVS5w3E&callback=initMap"></script>
+  {{#if showGoogleMap}}
+    <script src="https://maps.googleapis.com/maps/api/js?v=quarterly&key=AIzaSyBD3uxK2swjogbpLfQwItu7TqEpaVS5w3E&callback=initMap"></script>
+  {{/if}}
 </html>

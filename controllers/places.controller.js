@@ -7,7 +7,7 @@ const PLACE_CATEGORIES = constants.PLACE_CATEGORIES
 
 module.exports.list = (req, res, next) => {
   Place.find()
-    .then(places => res.render('places/list', {places}))
+    .then(places => res.render('places/list', {places, showGoogleMap:true}))
     .catch(error => next(error));
 }
 
