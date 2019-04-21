@@ -20,7 +20,7 @@ class BbvaApiCall {
     this.method = 'GET',
     this.headers = {
       'authorization': `${tokenType} ${accessToken}`,
-      'content-type': 'application/json'
+      'content-type': 'application/json' //seguro que es content-type?
     }
     //tengo que cambiar el zipcode en bruto por una variable
     this.url = `https://apis.bbva.com/paystats_sbx/4/zipcodes/28002/origin_distribution?origin_type=${type}&max_date=${maxDate}&min_date=${minDate}`
@@ -29,9 +29,6 @@ class BbvaApiCall {
 
 
 module.exports.setGraphs = (req,res,next) => {
-  bbvaApi.getToken().then(data=>{
-    return data
-  })
   res.render('setDashboard/form')
 }
 
