@@ -13,7 +13,7 @@ const placeSchema = new mongoose.Schema({
     type: { type: String },
     coordinates: [Number]
   }, 
-  propertiesSchema : { 
+  properties : { 
     phoneFormatted : String,
     phone: String,
     address: String,
