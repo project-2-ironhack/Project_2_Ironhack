@@ -2,6 +2,7 @@
 
 
 const axios = require('axios')
+const bbvaApi = require('./../api/bbva.api')
 const qs = require('qs')
 
 // change this
@@ -28,6 +29,9 @@ class BbvaApiCall {
 
 
 module.exports.setGraphs = (req,res,next) => {
+  bbvaApi.getToken().then(data=>{
+    return data
+  })
   res.render('setDashboard/form')
 }
 
