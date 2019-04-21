@@ -5,7 +5,7 @@ const placeSchema = new mongoose.Schema({
     type: String,
   },
   type : {
-    type: [String],
+    type: String,
     enum: ['coffeshop', 'bookstore', 'Feature'],
     required: true   
   },
