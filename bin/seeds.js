@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 const Places = require('./../models/places.model');
+// Let's call for some places. 
+const axios = require('axios')
 
 const dbName = 'project2'
 const MONGODB_URI = process.env.MONGODB_URI || `mongodb://localhost:27017/${dbName}`
