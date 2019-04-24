@@ -25,5 +25,5 @@ module.exports.getBbbvaData = (req,res,next) => {
 
 
 module.exports.display = (req,res,next) => {
-  res.render('dashboard/list',{dashboard:true})
+  res.render('dashboard/list', {dashboard:true})
 }

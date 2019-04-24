@@ -1,11 +1,10 @@
 
     <div>
-    <form action="dashboard" method="GET">
-
+    <form action="set" method="POST">
 
     <div class="form-group">
-      <label>Origin Type</label>
-      <input type="text" class="form-control" name="origin_type" value="">
+      <label>Zip Code</label>
+      <input type="text" class="form-control" name="zip_code" value="">
     </div>
 
 
@@ -19,6 +18,18 @@
       <input type="text" class="form-control" name="max_date">
     </div>
 
+    <div class="form-group">
+      <label>Main Category</label>
+
+      <select name="mainCategory" class="form-control">
+        {{#each categories as |category|}}
+          <option value="{{category}}">
+          {{!-- {{#isMainCategory ../book category }}selected{{/isMainCategory}}> --}}
+            {{category}}
+          </option>
+        {{/each}} 
+      </select>
+    </div>
     <div class="d-flex">
       <button type="submit" class="btn btn-primary mr-3">Submit</button>
       <a class="btn btn-secondary" href="/places">Back</a>

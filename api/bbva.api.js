@@ -18,7 +18,7 @@ class BbvaTokenCall   {
   }
 }
 class BbvaApiCall {
-  constructor (accessToken,tokenType,params) {
+  constructor (accessToken, tokenType, params) {
     this.method = 'GET',
     this.headers = {
       'authorization': `${tokenType} ${accessToken}`,
