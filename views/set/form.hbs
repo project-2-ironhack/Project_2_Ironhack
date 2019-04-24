@@ -19,13 +19,13 @@
     </div>
 
     <div class="form-group">
-      <label>Main Category</label>
+      <label>Main graph</label>
 
-      <select name="mainCategory" class="form-control">
-        {{#each categories as |category|}}
-          <option value="{{category}}">
-          {{!-- {{#isMainCategory ../book category }}selected{{/isMainCategory}}> --}}
-            {{category}}
+      <select name="maingraph" class="form-control">
+        {{#each categories as |graph|}}
+          <option value="{{graph}}">
+          {{!-- {{#isMaingraph ../book graph }}selected{{/isMaingraph}}> --}}
+            {{graph}}
           </option>
         {{/each}} 
       </select>
