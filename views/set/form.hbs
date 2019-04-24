@@ -1,13 +1,39 @@
 
-    <div>
+    <div class="container">
     <form action="set" method="POST">
 
     <div class="form-group">
       <label>Zip Code</label>
       <input type="text" class="form-control" name="zip_code" value="">
     </div>
+    <div class="form-group">
+      <label>Establecimiento</label>
 
-
+      <select name="maingraph" class="form-control">
+          <option value="">Seleccionar un gráfico</option>
+        {{#each kinds as |kind|}}
+          <option value="{{kind}}">
+          {{!-- {{#isMainkind ../book kind }}selected{{/isMainkind}}> --}}
+            {{kind}}
+          </option>
+        {{/each}} 
+      </select>
+    </div>
+    <hr>
+    <div class="form-group">
+      <h5>Primera Gráfica</h5>
+      <label>Tipo de gráfico</label>
+      <select name="maingraph" class="form-control">
+          <option value="">Seleccionar un gráfico</option>
+        {{#each Graph as |graph|}}
+          <option value="{{graph}}">
+          {{!-- {{#isMaingraph ../book graph }}selected{{/isMaingraph}}> --}}
+            {{graph}}
+          </option>
+        {{/each}} 
+      </select>
+    </div>
+    <h5>Data <strong>Y</strong></h5>
     <div class="form-group">
       <label>Min date</label>
       <input type="text" class="form-control" name="min_date">
@@ -17,19 +43,21 @@
       <label>Max date</label>
       <input type="text" class="form-control" name="max_date">
     </div>
-
+    <h5>Data <strong>X</strong></h5>
     <div class="form-group">
-      <label>Main graph</label>
+      <label>Categorias</label>
 
       <select name="maingraph" class="form-control">
-        {{#each categories as |graph|}}
-          <option value="{{graph}}">
-          {{!-- {{#isMaingraph ../book graph }}selected{{/isMaingraph}}> --}}
-            {{graph}}
+          <option value="">Seleccionar un gráfico</option>
+        {{#each Categories as |category|}}
+          <option value="{{category}}">
+          {{!-- {{#isMaincategory ../book category }}selected{{/isMaincategory}}> --}}
+            {{category}}
           </option>
         {{/each}} 
       </select>
     </div>
+
     <div class="d-flex">
       <button type="submit" class="btn btn-primary mr-3">Submit</button>
       <a class="btn btn-secondary" href="/places">Back</a>
