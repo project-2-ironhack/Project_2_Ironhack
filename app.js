@@ -17,6 +17,8 @@ const placesRouter = require('./routes/places.routes')
 const mapsRouter = require('./routes/maps.routes')
 // const placesRouter = require('./routes/places.routes')
 const dashBoardRouter = require('./routes/dash.routes')
+const setRouter = require('./routes/set.routes')
+
 
 
 
@@ -56,8 +58,9 @@ app.use('/',authRouter)
 app.use('/',userRouter)
 app.use('/places', placesRouter)
 app.use('/mapbox', mapsRouter)
+app.use('/set',setRouter)
 // app.use('/places', placesRouter)
-app.use('/editDashboard', dashBoardRouter)
+app.use('/dashboard', dashBoardRouter)
 
 
 // catch 404 and forward to error handler

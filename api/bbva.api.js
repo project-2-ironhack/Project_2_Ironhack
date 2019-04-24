@@ -1,68 +1,38 @@
 const axios = require('axios')
 // Constantes. 
-const BBVA_AUTH = process.env.BBVA_API || 'YXBwLmJidmEuaXJvbmhhY2s6aTdsNkp5UzhsQk4kYUpMR1RTa29UNDIzdyRWcXhnQk9pJDFGNVJjQGYkVDZJZip4YiRBbW0laFJqZFh0cVRRQg==' 
 const TOKEN_URL = 'https://connect.bbva.com'
 
 
 // internal function. 
-getToken = () => {
-  const postConfig =  {
-    url : `${TOKEN_URL}/token`,
-    method: 'POST',
-    headers: { 
+class BbvaTokenCall   {
+  constructor(auth) {
+    this.method = 'POST',
+    this.headers = { 
       'content-type': 'application/json',
-      'authorization': `Basic ${BBVA_AUTH}`
+      'authorization': `Basic ${auth}`
     },
-    params: {
-      grant_type : 'client_credentials'
-    },
+    this.url = 'https://connect.bbva.com/token'
+    this.params = {
+      'grant_type':'client_credentials'
+    }
   }
-  return (
-    axios(postConfig)
-    .then(response => {
-      return {
-        token: response.data['access_token'],
-        tokenType: response.data['token_type']
-      }
-    })
-  )  
 }
-module.exports.marketValue = (params) =>{
-  params = params || {
-    // 'marketValue' :'true',
-    // 'surfaceArea' :'71.5',
-    // 'type' :'P',
-    // 'age' :'47',
-    // 'apartment' :'B',
-    // 'floor' :'03',
-    // 'stairCase' :'MADRID',
-    // 'building' :'1',
-    // 'number' :'271',
-    // 'streetName' :'ALCALA',
-    // 'streetType' :'CALLE',
-    // 'postalCode' :'28027',
-    // 'city' :'MADRID',
-    // 'province' :'MADRID',
-    'long' :'-3.65',
-    'lat' :'40.43'
+class BbvaApiCall {
+  constructor (accessToken,tokenType,params) {
+    this.method = 'GET',
+    this.headers = {
+      'authorization': `${tokenType} ${accessToken}`,
+      'content-type': 'application/json' //seguro que es content-type?
+    }
+    //tengo que cambiar el zipcode en bruto por una variable
+    this.url = 'https://apis.bbva.com/paystats_sbx/4/zipcodes/28002/origin_distribution'
+    this.params = {
+        'origin_type' : params['origin_type'],
+        'min_date' : params['min_date'],
+        'max_date' : params['max_date']
+    }
   }
-  return  (
-    getToken()
-      .then(tokenObj => {
-        const getConfig =  {
-          url : 'https://apis.bbva.com/sel-sbx/v1/info',
-          headers: { 
-            'Authorization': `${tokenObj.tokenType} ${tokenObj.token}`,
-            'Accept':'application/json', 
-            'content-type': 'application/json'
-          },
-          params: params,
-        } 
-        return axios(getConfig)
-          .then(response => {
-            return response.data
-          })
-          .catch (err => `la cagaste wey ${err}`)
-      })
-  )
 }
+
+module.exports.BbvaTokenCall = BbvaTokenCall
+module.exports.BbvaApiCall = BbvaApiCall
