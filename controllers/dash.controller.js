@@ -1,4 +1,5 @@
 // esta pagina hay que estructurarla bien
+require('dotenv').config()
 const BBVA_AUTH = process.env.BBVA_API
 
 
@@ -10,8 +11,9 @@ const bbvaApi = require('../api/bbva.api')
 
 
 module.exports.getBbbvaData = (req,res,next) => {
-  const params = req.query
+  const params = req.params
   const bbvaTokenCall = new bbvaApi.BbvaTokenCall(BBVA_AUTH)
+  console.log(bbvaTokenCall)
     axios(bbvaTokenCall)
       .then(response => {
         const accessToken = response.data['access_token']
@@ -25,5 +27,6 @@ module.exports.getBbbvaData = (req,res,next) => {
 
 
 module.exports.display = (req,res,next) => {
-  res.render('dashboard/list',{dashboard:true})
+  const params = req.query
+  res.render('dashboard/list',{dashboard:true,params:params})
 }
