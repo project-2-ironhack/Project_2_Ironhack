@@ -23,7 +23,7 @@
     <div class="form-group">
       <h5>Primera Gráfica</h5>
       <label>Tipo de gráfico</label>
-      <select name="maingraph" class="form-control">
+      <select name="graphs[0]graph[type]" class="form-control">
           <option value="">Seleccionar un gráfico</option>
         {{#each Graph as |graph|}}
           <option value="{{graph}}">
@@ -36,18 +36,18 @@
     <h5>Data <strong>Y</strong></h5>
     <div class="form-group">
       <label>Min date</label>
-      <input type="text" class="form-control" name="min_date">
+      <input type="text" class="form-control" name="graphs[0]graph[data][y][minDate]">
     </div>
 
     <div class="form-group">
       <label>Max date</label>
-      <input type="text" class="form-control" name="max_date">
+      <input type="text" class="form-control" name="graphs[0]graph[data][y][maxDate]">
     </div>
     <h5>Data <strong>X</strong></h5>
     <div class="form-group">
       <label>Categorias</label>
 
-      <select name="maingraph" class="form-control">
+      <select name="graphs[0]graph[data][x]" class="form-control">
           <option value="">Seleccionar un gráfico</option>
         {{#each Categories as |category|}}
           <option value="{{category}}">
@@ -64,3 +64,24 @@
     </div>
   </form>
   </div>
+
+
+{{!-- let graph = $('#templates .graph').clone()
+graph.find('.graph-type').attr('name')
+
+  <div id="templates" style="display:none">
+    <div class="graph grapth-bars">
+      <div class="form-group">
+        <h5>Primera Gráfica</h5>
+        <label>Tipo de gráfico</label>
+        <select name="graphs[$i]graph[type]" class="form-control graph-type">
+            <option value="">Seleccionar un gráfico</option>
+          {{#each Graph as |graph|}}
+            <option value="{{graph}}">
+              {{graph}}
+            </option>
+          {{/each}} 
+        </select>
+      </div>
+    </div>
+  </div> --}}
