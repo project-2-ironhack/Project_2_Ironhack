@@ -1,22 +1,61 @@
 
-    <div>
-    <form action="dashboard/getData" method="GET">
-
+    <div class="container">
+    <form action="dashboard" method="POST">
 
     <div class="form-group">
-      <label>Origin Type</label>
-      <input type="text" class="form-control" name="origin_type" value="">
+      <label>Zip Code</label>
+      <input type="text" class="form-control" name="zip_code" value="">
     </div>
+    <div class="form-group">
+      <label>Establecimiento</label>
 
-
+      <select name="maingraph" class="form-control">
+          <option value="">Seleccionar un gráfico</option>
+        {{#each kinds as |kind|}}
+          <option value="{{kind}}">
+          {{!-- {{#isMainkind ../book kind }}selected{{/isMainkind}}> --}}
+            {{kind}}
+          </option>
+        {{/each}} 
+      </select>
+    </div>
+    <hr>
+    <div class="form-group">
+      <h5>Primera Gráfica</h5>
+      <label>Tipo de gráfico</label>
+      <select name="graphs[0]graph[type]" class="form-control">
+          <option value="">Seleccionar un gráfico</option>
+        {{#each Graph as |graph|}}
+          <option value="{{graph}}">
+          {{!-- {{#isMaingraph ../book graph }}selected{{/isMaingraph}}> --}}
+            {{graph}}
+          </option>
+        {{/each}} 
+      </select>
+    </div>
+    <h5>Data <strong>Y</strong></h5>
     <div class="form-group">
       <label>Min date</label>
-      <input type="text" class="form-control" name="min_date">
+      <input type="text" class="form-control" name="graphs[0]graph[data][y][minDate]">
     </div>
 
     <div class="form-group">
       <label>Max date</label>
-      <input type="text" class="form-control" name="max_date">
+      <input type="text" class="form-control" name="graphs[0]graph[data][y][maxDate]">
+    </div>
+    <h5>Data <strong>X</strong></h5>
+    <div class="form-group">
+      <label>Categorias</label>
+
+      <select name="graphs[0]graph[data][x]" class="form-control">
+          <option value="">Seleccionar un gráfico</option>
+        {{#each Categories as |category|}}
+          <option value="{{category}}">
+          {{!-- {{#isMaincategory ../book category }}selected{{/isMaincategory}}> --}}
+            {{category}}
+          </option>
+        {{/each}} 
+      </select>
     </div>
 
     <div class="d-flex">
@@ -25,3 +64,24 @@
     </div>
   </form>
   </div>
+
+
+{{!-- let graph = $('#templates .graph').clone()
+graph.find('.graph-type').attr('name')
+
+  <div id="templates" style="display:none">
+    <div class="graph grapth-bars">
+      <div class="form-group">
+        <h5>Primera Gráfica</h5>
+        <label>Tipo de gráfico</label>
+        <select name="graphs[$i]graph[type]" class="form-control graph-type">
+            <option value="">Seleccionar un gráfico</option>
+          {{#each Graph as |graph|}}
+            <option value="{{graph}}">
+              {{graph}}
+            </option>
+          {{/each}} 
+        </select>
+      </div>
+    </div>
+  </div> --}}
