@@ -2,13 +2,15 @@
 // const Places = require('./../models/places.model');
 const axios = require('axios')
 const GOOGLE_API = 'AIzaSyC6ZCMc68-WlyzGtqkjraw3nroaEYqcIww'
+const mapping =  require('./../helpers/mapsParser');
+
+//?  npm run seeds --what='Restaurants' --where=Madrid 
 
 const output = process.env.npm_config_output || 'json'
 const what = process.env.npm_config_what || 'restaurants'
 const where = process.env.npm_config_where || 28045 //? working, but not searching with postal code
-const all = process.env.npm_config_all || true //! not working || default false
+const all = process.env.npm_config_all || true //! not working
 
-//?  npm run seeds --what='Restaurants' --where=123 
 /* 
 * There is a short delay between when a next_page_token is issued, and when it will become valid. 
 * Requesting the next page before it is available will return an INVALID_REQUEST response. 
@@ -28,7 +30,7 @@ console.log(`we are looging for ${what} in ${where} and we will look for more ${
 axios.get(`https://maps.googleapis.com/maps/api/place/textsearch/${output}?query=${what}+in+${where}&fields=geometry&key=${GOOGLE_API}`)
   .then(response => {
     let page = response.data.results.length
-    if(response.data.next_page_token) {
+    if(all && response.data.next_page_token) {
       console.log(response.data.next_page_token)
       console.log('looking for more page')
       axios.get(`https://maps.googleapis.com/maps/api/place/textsearch/${output}`, {         
@@ -39,7 +41,7 @@ axios.get(`https://maps.googleapis.com/maps/api/place/textsearch/${output}?query
       })
         .then(nextRes => {
           page =+ nextRes.data.results.length
-          if(nextRes.data.next_page_token) {
+          if(all && nextRes.data.next_page_token) {
             axios.get(`https://maps.googleapis.com/maps/api/place/textsearch/${output}`, {         
               params: {
                 pagetoken : nextRes.data.next_page_token,
@@ -62,38 +64,10 @@ axios.get(`https://maps.googleapis.com/maps/api/place/textsearch/${output}?query
   })
   .catch(error => console.log(error));
 
-
-
-
-// const geojson = [
-//   {
-//     "type": "Feature",
-//     "geometry": {
-//       "type": "Point",
-//       "coordinates": [
-//         38.909671288923,
-//         -77.034084142948
-//       ]
-//     },
-//     "properties": {
-//       "phoneFormatted": "(202) 234-7336",
-//       "phone": "2022347336",
-//       "address": "1471 P St NW",
-//       "city": "Washington DC",
-//       "country": "United States",
-//       "crossStreet": "at 15th St NW",
-//       "postalCode": "20005",
-//       "state": "D.C."
-//     }
-//   },
-// ];
-
-
-
-// // ** Connect to database. 
+// ** Connect to database. 
 // require('./config/db.config');
 
-// // ** Delete & Import to Mongo
+// ** Delete & Import to Mongo
 // Places.deleteMany()
 //     .then(() => Places.create(geojson))
 //     .then(geojson => {
