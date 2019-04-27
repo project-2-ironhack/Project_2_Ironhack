@@ -1,24 +1,28 @@
-// const mongoose = require('mongoose');
-// const Places = require('./../models/places.model');
+const mongoose = require('mongoose');
+const Places = require('./../models/places.model');
 const axios = require('axios')
-const GOOGLE_API = 'AIzaSyC6ZCMc68-WlyzGtqkjraw3nroaEYqcIww'
-const mapping =  require('./../helpers/mapsParser');
-
-//?  npm run seeds --what='Restaurants' --where=Madrid 
-
+const GOOGLE_API = 'AIzaSyC6ZCMc68-WlyzGtqkjraw3nroaEYqcIww' //! bring it from .env
+const parce =  require('./../helpers/mapsParser'); //custom parse for google map response
+// npm variables
 const output = process.env.npm_config_output || 'json'
 const what = process.env.npm_config_what || 'restaurants'
 const where = process.env.npm_config_where || 28045 //? working, but not searching with postal code
-const all = process.env.npm_config_all || true //! not working
+const all = process.env.npm_config_all || false //! not working
 
 /* 
 * There is a short delay between when a next_page_token is issued, and when it will become valid. 
 * Requesting the next page before it is available will return an INVALID_REQUEST response. 
 * Retrying the request with the same next_page_token will return the next page of results.
  */
-console.log(`we are looging for ${what} in ${where} and we will look for more ${all}`) 
+const timeout = 2000
+console.log(`we are looking for ${what} in ${where} and we will look for more ${all}`) 
+
+
+// ** Connect to database. 
+require('./../config/db.config');
 
 //* Get data from GoogleMaps. 
+//?  npm run seeds --what='Restaurants' --where=28045 
 //! Postal code not working, if i send it by params. Why?? 
 // axios.get(`https://maps.googleapis.com/maps/api/place/textsearch/${output}`, {
 //     params: {
@@ -30,47 +34,64 @@ console.log(`we are looging for ${what} in ${where} and we will look for more ${
 axios.get(`https://maps.googleapis.com/maps/api/place/textsearch/${output}?query=${what}+in+${where}&fields=geometry&key=${GOOGLE_API}`)
   .then(response => {
     let page = response.data.results.length
-    if(all && response.data.next_page_token) {
-      console.log(response.data.next_page_token)
-      console.log('looking for more page')
-      axios.get(`https://maps.googleapis.com/maps/api/place/textsearch/${output}`, {         
-        params: {
-          pagetoken : response.data.next_page_token,
-          key : GOOGLE_API,
-        }   
-      })
-        .then(nextRes => {
-          page =+ nextRes.data.results.length
-          if(all && nextRes.data.next_page_token) {
-            axios.get(`https://maps.googleapis.com/maps/api/place/textsearch/${output}`, {         
-              params: {
-                pagetoken : nextRes.data.next_page_token,
-                key : GOOGLE_API,
-              }   
-            })            
-              .then(finalRes => {
-                page =+ finalRes.data.results.length            
-                console.log(`Status ${finalRes.data.status}, we found:  ${page} elements in a third level`);
-              })
-              .catch(err=>console.error(err))
-          } else {
-            console.log(`Status ${nextRes.data.status}, we found:  ${page} elements in a second level`);
-          }
+    let data = parce.mapping(response.data.results);
+    importMongo(data)
+    if(response.data.next_page_token) {
+      console.log('looking for pages 2')
+      setTimeout(()=>{
+        //? axios.get(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?pagetoken=${response.data.next_page_token}&key=${GOOGLE_API}`)
+        axios.get(`https://maps.googleapis.com/maps/api/place/textsearch/${output}`, {         
+          params: {
+            pagetoken : response.data.next_page_token,
+            key : GOOGLE_API,
+          }   
         })
-        .catch(err=>console.error(err))
+          .then(nextRes => {
+            page += nextRes.data.results.length
+            // data = [...data, parce.mapping(nextRes.data.results)]
+            data = parce.mapping(nextRes.data.results)
+            importMongo(data)
+            if(nextRes.data.next_page_token) {
+              console.log('looking for page 3')
+              setTimeout(()=>{
+                //? axios.get(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?pagetoken=${nextRes.data.next_page_token}&key=${GOOGLE_API}`)
+                axios.get(`https://maps.googleapis.com/maps/api/place/textsearch/${output}`, {         
+                  params: {
+                    pagetoken : nextRes.data.next_page_token,
+                    key : GOOGLE_API,
+                  }   
+                })            
+                  .then(finalRes => {
+                    // data = [...data, parce.mapping(finalRes.data.results)]
+                    data = parce.mapping(finalRes.data.results)
+                    importMongo(data) 
+                    page += finalRes.data.results.length            
+                    console.log(`Status ${finalRes.data.status}, we found:  ${page} elements in a third level`);
+                  })
+                  .catch(err=>console.error(err))
+              }, timeout)
+            } else {
+              console.log(`Status ${nextRes.data.status}, we found:  ${page} elements in a second level`);
+            }
+          })
+          .catch(err=>console.error(err))
+      }, timeout)
     } else {
       console.log(`Status ${response.data.status}, we found:  ${page} elements, in the first level`);
     }
   })
   .catch(error => console.log(error));
 
-// ** Connect to database. 
-// require('./config/db.config');
+
 
 // ** Delete & Import to Mongo
-// Places.deleteMany()
-//     .then(() => Places.create(geojson))
-//     .then(geojson => {
-//         console.log(`Created ${geojson.length} places`)
-//         mongoose.connection.close()
-//     })
+function importMongo(data) {
+  console.log('preparing to import')
+  Places.deleteMany()
+    .then(() => Places.create(data))
+    .then(inside => {
+        console.log(`Created ${inside.length} places`)
+        mongoose.connection.close()
+    })
+    .catch(e => console.error(e))
+}

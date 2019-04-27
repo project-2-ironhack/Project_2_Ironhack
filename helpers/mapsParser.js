@@ -1,5 +1,6 @@
 module.exports.mapping = (data) => {
-  data.map( e => {
+  pc = (string) => string.match(/28(\d+){3}/)[0] 
+  return data.map( e => {
     return {
       name : e.name,
       type: "Feature",      
@@ -17,7 +18,7 @@ module.exports.mapping = (data) => {
         priceLevel : e.price_level,
         types : e.types,
         //* Extraemos el código postal
-        postalCode: () => e.name.match(/28(\d+){3}/)[0], 
+        postalCode: pc(e.formatted_address),
         city: 'Madrid',
         country: 'Spain'
       }
