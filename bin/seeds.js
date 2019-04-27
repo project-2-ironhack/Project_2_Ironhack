@@ -35,11 +35,9 @@ axios.get(`https://maps.googleapis.com/maps/api/place/textsearch/${output}?query
   .then(response => {
     let page = response.data.results.length
     let data = parce.mapping(response.data.results);
-    importMongo(data)
     if(response.data.next_page_token) {
       console.log('looking for pages 2')
       setTimeout(()=>{
-        //? axios.get(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?pagetoken=${response.data.next_page_token}&key=${GOOGLE_API}`)
         axios.get(`https://maps.googleapis.com/maps/api/place/textsearch/${output}`, {         
           params: {
             pagetoken : response.data.next_page_token,
@@ -48,13 +46,11 @@ axios.get(`https://maps.googleapis.com/maps/api/place/textsearch/${output}?query
         })
           .then(nextRes => {
             page += nextRes.data.results.length
-            // data = [...data, parce.mapping(nextRes.data.results)]
-            data = parce.mapping(nextRes.data.results)
-            importMongo(data)
+            data = [...data, ...parce.mapping(nextRes.data.results)]
+            // importMongo(data)
             if(nextRes.data.next_page_token) {
               console.log('looking for page 3')
               setTimeout(()=>{
-                //? axios.get(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?pagetoken=${nextRes.data.next_page_token}&key=${GOOGLE_API}`)
                 axios.get(`https://maps.googleapis.com/maps/api/place/textsearch/${output}`, {         
                   params: {
                     pagetoken : nextRes.data.next_page_token,
@@ -62,22 +58,24 @@ axios.get(`https://maps.googleapis.com/maps/api/place/textsearch/${output}?query
                   }   
                 })            
                   .then(finalRes => {
-                    // data = [...data, parce.mapping(finalRes.data.results)]
-                    data = parce.mapping(finalRes.data.results)
-                    importMongo(data) 
+                    data = [...data, ...parce.mapping(finalRes.data.results)]
                     page += finalRes.data.results.length            
                     console.log(`Status ${finalRes.data.status}, we found:  ${page} elements in a third level`);
+                    importMongo(data) 
                   })
                   .catch(err=>console.error(err))
               }, timeout)
             } else {
               console.log(`Status ${nextRes.data.status}, we found:  ${page} elements in a second level`);
+              importMongo(data) 
             }
           })
           .catch(err=>console.error(err))
       }, timeout)
     } else {
       console.log(`Status ${response.data.status}, we found:  ${page} elements, in the first level`);
+      importMongo(data) 
+
     }
   })
   .catch(error => console.log(error));
