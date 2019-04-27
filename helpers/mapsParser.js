@@ -8,8 +8,8 @@ module.exports.mapping = (data) => {
         type: 'Point',
         coordinates: [
           //* les damos la vuelta...  
-          e.geometry.location.lng,
           e.geometry.location.lat,
+          e.geometry.location.lng,
         ]
       }, 
       properties : {
