@@ -19,6 +19,7 @@ const placeSchema = new mongoose.Schema({
     postalCode: String,
     city: String,
     country: String,
+    icon: String
   }
 },{ timestamps: true });
 

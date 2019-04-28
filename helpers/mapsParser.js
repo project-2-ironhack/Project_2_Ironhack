@@ -20,7 +20,8 @@ module.exports.mapping = (data) => {
         //* Extraemos el código postal
         postalCode: pc(e.formatted_address),
         city: 'Madrid',
-        country: 'Spain'
+        country: 'Spain',
+        icon: e.icon
       }
     }
   })
