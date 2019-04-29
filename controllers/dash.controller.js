@@ -11,21 +11,21 @@ const bbvaApi = require('../api/bbva.api')
 
 
 module.exports.getBbbvaData = (req,res,next) => {
-  const params = req.params
+  const params = req.body.params
   const bbvaTokenCall = new bbvaApi.BbvaTokenCall(BBVA_AUTH)
-  console.log(bbvaTokenCall)
-    axios(bbvaTokenCall)
-      .then(response => {
-        const accessToken = response.data['access_token']
-        const tokenType = response.data['token_type']
-        const bbvaApiCall = new bbvaApi.BbvaApiCall(accessToken,tokenType,params)
-        return axios(bbvaApiCall)
-          .then(response => res.send(response.data))
-      })
-      .catch(next)
+  axios(bbvaTokenCall)
+    .then(response => {
+      const accessToken = response.data['access_token']
+      const tokenType = response.data['token_type']
+      const bbvaApiCall = new bbvaApi.BbvaApiCall(accessToken,tokenType,params)
+      return axios(bbvaApiCall)
+        .then(response => res.json(response.data))
+    })
+    .catch(next)
 }
 
 
 module.exports.display = (req,res,next) => {
-  res.render('dashboard/list', {dashboard:true, params:req.body})
+  console.log(req.body)
+  res.render('dashboard/list', {dashboard:true, params:JSON.stringify(req.body)})
 }

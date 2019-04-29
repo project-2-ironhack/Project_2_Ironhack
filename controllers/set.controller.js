@@ -1,6 +1,7 @@
 const Graph = ['Barras', 'Pie', 'etc']
 const kinds = ['Supermarket', 'Coffee', 'Shops']
-const Categories = ['Credit Card', 'Something else', 'etc']
+// no podemos pasarle espacios los atributos porque entonces no funciona el stringify bien
+const Categories = ['creditCard', 'somethingElse', 'etc']
 
 module.exports.create = (req,res,next) => {
   res.render('set/form', { Graph, kinds, Categories})

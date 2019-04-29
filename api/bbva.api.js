@@ -22,12 +22,12 @@ class BbvaApiCall {
     this.method = 'GET',
     this.headers = {
       'authorization': `${tokenType} ${accessToken}`,
-      'content-type': 'application/json' //seguro que es content-type?
+      'accept': 'application/json' //seguro que es content-type?
     }
     //tengo que cambiar el zipcode en bruto por una variable
     this.url = 'https://apis.bbva.com/paystats_sbx/4/zipcodes/28002/origin_distribution'
     this.params = {
-        'origin_type' : params['origin_type'],
+        'origin_type' : 'zipcodes',
         'min_date' : params['min_date'],
         'max_date' : params['max_date']
     }

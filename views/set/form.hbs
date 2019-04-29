@@ -10,7 +10,7 @@
       <label>Establecimiento</label>
 
       <select name="maingraph" class="form-control">
-          <option value="">Seleccionar un gráfico</option>
+          <option value="" disabled selected>Seleccionar un gráfico</option>
         {{#each kinds as |kind|}}
           <option value="{{kind}}">
           {{!-- {{#isMainkind ../book kind }}selected{{/isMainkind}}> --}}
@@ -24,7 +24,7 @@
       <h5>Primera Gráfica</h5>
       <label>Tipo de gráfico</label>
       <select name="graphs[0]graph[type]" class="form-control">
-          <option value="">Seleccionar un gráfico</option>
+          <option value="" disabled selected>Seleccionar un gráfico</option>
         {{#each Graph as |graph|}}
           <option value="{{graph}}">
           {{!-- {{#isMaingraph ../book graph }}selected{{/isMaingraph}}> --}}
@@ -36,19 +36,19 @@
     <h5>Data <strong>Y</strong></h5>
     <div class="form-group">
       <label>Min date</label>
-      <input type="text" class="form-control" name="graphs[0]graph[data][y][minDate]">
+      <input type="text" class="form-control" name="graphs[0]graph[data][y][min_date]">
     </div>
 
     <div class="form-group">
       <label>Max date</label>
-      <input type="text" class="form-control" name="graphs[0]graph[data][y][maxDate]">
+      <input type="text" class="form-control" name="graphs[0]graph[data][y][max_date]">
     </div>
     <h5>Data <strong>X</strong></h5>
     <div class="form-group">
       <label>Categorias</label>
 
       <select name="graphs[0]graph[data][x]" class="form-control">
-          <option value="">Seleccionar un gráfico</option>
+          <option value="" disabled selected>Seleccionar un gráfico</option>
         {{#each Categories as |category|}}
           <option value="{{category}}">
           {{!-- {{#isMaincategory ../book category }}selected{{/isMaincategory}}> --}}
