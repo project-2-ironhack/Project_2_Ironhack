@@ -1,3 +1,5 @@
+require('dotenv').config()
+
 const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
@@ -17,6 +19,8 @@ const placesRouter = require('./routes/places.routes')
 const mapsRouter = require('./routes/maps.routes')
 // const placesRouter = require('./routes/places.routes')
 const dashBoardRouter = require('./routes/dash.routes')
+const setRouter = require('./routes/set.routes')
+
 
 
 
@@ -28,7 +32,7 @@ app.set('view engine', 'hbs');
 
 app.use(logger('dev'));
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(sassMiddleware({
   src: path.join(__dirname, 'public'),
@@ -56,8 +60,9 @@ app.use('/',authRouter)
 app.use('/',userRouter)
 app.use('/places', placesRouter)
 app.use('/mapbox', mapsRouter)
+app.use('/set',setRouter)
 // app.use('/places', placesRouter)
-app.use('/editDashboard', dashBoardRouter)
+app.use('/dashboard', dashBoardRouter)
 
 
 // catch 404 and forward to error handler

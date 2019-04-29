@@ -1,48 +1,32 @@
-// esta pagina hay que estructurarla bien
+const bbvaService = require('../services/bbva.service');
+
+// module.exports.getBbbvaData = (req,res,next) => {
+//   const params = req.body.params
+//   const bbvaTokenCall = new bbvaApi.BbvaTokenCall(BBVA_AUTH)
+//   axios(bbvaTokenCall)
+//     .then(response => {
+//       const accessToken = response.data['access_token']
+//       const tokenType = response.data['token_type']
+//       const bbvaApiCall = new bbvaApi.BbvaApiCall(accessToken,tokenType,params)
+//       return axios(bbvaApiCall)
+//         .then(response => res.json(response.data))
+//     })
+//     .catch(next)
+// }
 
 
-const axios = require('axios')
-const bbvaApi = require('./../api/bbva.api')
-const qs = require('qs')
+module.exports.display = (req,res,next) => {
+  const promises = req.body.graphs.map((graph) => {
+    return bbvaService.getData({min: '201501', max: '201501'})
+  })
 
-// change this
-const BBVA_AUTH = 'YXBwLmJidmEuaXJvbmhhY2s6aTdsNkp5UzhsQk4kYUpMR1RTa29UNDIzdyRWcXhnQk9pJDFGNVJjQGYkVDZJZip4YiRBbW0laFJqZFh0cVRRQg=='
-const bbvaTokenCall =  {
-  method: 'POST',
-  headers: { 
-    'content-type': 'application/json',
-    'authorization': `Basic ${BBVA_AUTH}`
-  },
-  url:'https://connect.bbva.com/token?grant_type=client_credentials'
-}
-class BbvaApiCall {
-  constructor (accessToken,tokenType,type,maxDate,minDate) {
-    this.method = 'GET',
-    this.headers = {
-      'authorization': `${tokenType} ${accessToken}`,
-      'content-type': 'application/json' //seguro que es content-type?
-    }
-    //tengo que cambiar el zipcode en bruto por una variable
-    this.url = `https://apis.bbva.com/paystats_sbx/4/zipcodes/28002/origin_distribution?origin_type=${type}&max_date=${maxDate}&min_date=${minDate}`
-  }
-}
-
-
-module.exports.setGraphs = (req,res,next) => {
-  res.render('setDashboard/form')
-}
-
-module.exports.paintGraphs = (req,res,next) => {
-  const {originType,maxDate,minDate} = req.query
-    axios(bbvaTokenCall)
-      .then(response => {
-        console.log(originType,maxDate,minDate)
-        const accessToken = response.data['access_token']
-        const tokenType = response.data['token_type']
-        const bbvaApi = new BbvaApiCall(accessToken,tokenType,originType,maxDate,minDate)
-        console.log(bbvaApi)
-        return axios(bbvaApi)
-          .then(response => res.send(response.data))
-      })
-      .catch(next)
+  Promise.all(promises)
+    .then((queries) => {
+      const data = queries.map((info, i) => {
+        console.log(info)
+        return Object.create(info)});
+      console.log(data);
+      res.render('dashboard/list', { dashboard:true, data:data })
+    })
+    .catch(error => next(error))
 }
