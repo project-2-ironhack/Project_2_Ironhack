@@ -31,13 +31,11 @@ window.onload = function () {
   //buscamos que graficas hay que pintar, quizás deberiamos adaptar esto, porque tenemos que definir bien la estructura de set.
   // modificar esto tambien
     const graphType = graphList.filter(graphType => graphType.name === graph.data.x)
-
-    graphInfo += 
-            `<div id="${graphType[0].name}">
-            </div>`
+    graphInfo = document.createElement('div');
+    graphInfo.id = graphType[0].name;
   });
 
-  graphsTable.innerHTML = graphInfo
+  // graphsTable.innerHTML = graphInfo
 
   const graphsNodes = graphsTable.childNodes
   
