@@ -3,9 +3,8 @@ const GOOGLE_API = 'AIzaSyC6ZCMc68-WlyzGtqkjraw3nroaEYqcIww' //! bring it from .
 const mapping =  require('./../helpers/mapsParser').mapping; //custom parse for google map response
 // npm variables
 const importMongo = require('./importPlaces').importMongo
-const output = process.env.npm_config_output || 'json'
-const what = process.env.npm_config_what || 'restaurants'
-const where = process.env.npm_config_where || 28045
+const what = process.env.npm_config_what 
+const where = process.env.npm_config_where
 const postalCode = require('./postalCodes');
 //! boolean not working
 const all = process.env.npm_config_all || false // search in deeper pages
@@ -13,15 +12,71 @@ const restart = process.env.npm_config_all || true // delete previus data.
 // ? searchig in all the postal codes. 
 const allData = process.env.npm_config_allData || false
 
+// ** Connect to database. 
+  require('./../config/db.config') //r u sure?
 if(allData){
   console.log(`Okey, dude, we will search in the ${postalCode.pc.length} postal codes from Madrid.`);
-  
-  // Promise.all([28045]).then(function(values) {
-  //   console.log(values);
-  // });
-
+  [28045].forEach((where, index) => {
+    setTimeout(function(){
+      getPlaces(where)
+    }, index * 5000);    
+  })
 } else {
-  console.log(`we are looking for ${what} in ${where} and we will look for more ${all}`) 
+  // console.log(`we are looking for ${what} in ${where} and we will look for more ${all}`) 
+  getPlaces()
+    .then(status => console.log(`Imported: ${status}`))
+    .catch(err => console.log(`err: ${err}`))
+}
+
+
+function getPlaces (where = 28045, what='Restaurants', output='json') {
+  return (
+    axios.get(`https://maps.googleapis.com/maps/api/place/textsearch/${output}?query=${what}+in+${where}&fields=geometry&key=${GOOGLE_API}`)
+      .then(sleeper())      
+      .then(response => {
+        let data = mapping(response.data.results);
+        console.log(`Status: ${response.data.status}`)
+        console.log(`we found ${data.length} elements in the first page`)
+        if(response.data.next_page_token) {
+          return  (
+            moreData(response.data.next_page_token)
+              .then(newData=>{
+                data = [...data, ...mapping(newData.data)]
+                console.log(`we found ${data.length} elements in the second page`)
+                if(newData.nxtToken){
+                  return  (
+                    moreData(moreData.nxtToken)
+                      .then(newData=>{
+                        data = [...data, ...mapping(newData.data)]                                    
+                        console.log(`we found ${data.length} elements in the third page`)
+                        return importMongo(data).then(status=>status)
+                      })    
+                  )
+                } else {
+                  return importMongo(data).then(status=>status)
+                }
+              })
+          )
+        } else {
+          return importMongo(data).then(status=>status)
+        }
+      })
+      .catch(error => console.log(error))
+  )
+}
+
+const moreData = nxtToken => {
+  return (
+    axios.get(`https://maps.googleapis.com/maps/api/place/textsearch/json`, {         
+    params: {pagetoken : nxtToken, key : GOOGLE_API,}
+    })
+      .then(sleeper())//sleeper para el tercer request
+      .then(response => {
+        console.log(`Status: ${response.data.status}`)
+        return {data: response.data.results, nxtToken: response.data.next_page_token}
+      })
+      .catch(err => console.log(err))
+  )
 }
 
 /* 
@@ -29,57 +84,8 @@ if(allData){
 * Requesting the next page before it is available will return an INVALID_REQUEST response. 
 * Retrying the request with the same next_page_token will return the next page of results.
  */
-const timeout = 1500
-
-// * Get data from GoogleMaps. 
-// ?  npm run seeds --what='Restaurants' --where=28045 
-axios.get(`https://maps.googleapis.com/maps/api/place/textsearch/${output}?query=${what}+in+${where}&fields=geometry&key=${GOOGLE_API}`)
-  .then(response => {
-    // * First Response
-    let page = response.data.results.length
-    let data = mapping(response.data.results);
-    if(response.data.next_page_token) {
-      // * Second Response
-      console.log(`looking in a second page for ${where}`)
-      setTimeout(()=>{
-        axios.get(`https://maps.googleapis.com/maps/api/place/textsearch/${output}`, {         
-          params: {
-            pagetoken : response.data.next_page_token,
-            key : GOOGLE_API,
-          }   
-        })
-          .then(nextRes => {
-            page += nextRes.data.results.length
-            data = [...data, ...mapping(nextRes.data.results)]
-            if(nextRes.data.next_page_token) {
-              // * Third Response
-              console.log(`looking in a third for ${where}`)
-              setTimeout(()=>{
-                axios.get(`https://maps.googleapis.com/maps/api/place/textsearch/${output}`, {         
-                  params: {
-                    pagetoken : nextRes.data.next_page_token,
-                    key : GOOGLE_API,
-                  }   
-                })            
-                  .then(finalRes => {
-                    data = [...data, ...mapping(finalRes.data.results)]
-                    page += finalRes.data.results.length            
-                    console.log(`Status ${finalRes.data.status}, we found:  ${page} elements for the place ${where}`);
-                    importMongo(data) 
-                  })
-                  .catch(err=>console.error(err))
-              }, timeout)
-            } else {
-              console.log(`Status ${nextRes.data.status}, we found:  ${page} elements in a second level`);
-              importMongo(data) 
-            }
-          })
-          .catch(err=>console.error(err))
-      }, timeout)
-    } else {
-      console.log(`Status ${response.data.status}, we found:  ${page} elements, in the first level`);
-      importMongo(data) 
-
-    }
-  })
-  .catch(error => console.log(error));
+function sleeper(ms = 3000) {
+  return function(x) {
+    return new Promise(resolve => setTimeout(() => resolve(x), ms));
+  };
+}
