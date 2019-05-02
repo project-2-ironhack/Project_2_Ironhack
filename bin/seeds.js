@@ -1,14 +1,10 @@
 const axios = require('axios')
-const GOOGLE_API = 'AIzaSyC6ZCMc68-WlyzGtqkjraw3nroaEYqcIww' //! bring it from .env
+const GOOGLE_API = process.env.PLACES_API_KEY
 const mapping =  require('./../helpers/mapsParser').mapping; //custom parse for google map response
 // npm variables
 const importMongo = require('./importPlaces').importMongo
-const what = process.env.npm_config_what 
-const where = process.env.npm_config_where
 const postalCode = require('./postalCodes');
 //! boolean not working
-const all = process.env.npm_config_all || false // search in deeper pages
-const restart = process.env.npm_config_all || true // delete previus data. 
 // ? searchig in all the postal codes. 
 const allData = process.env.npm_config_allData || false
 
