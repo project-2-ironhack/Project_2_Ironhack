@@ -14,25 +14,25 @@ const allData = process.env.npm_config_allData || false
 
 // ** Connect to database. 
   require('./../config/db.config') //r u sure?
-if(allData){
-  console.log(`Okey, dude, we will search in the ${postalCode.pc.length} postal codes from Madrid.`);
-  [28045].forEach((where, index) => {
-    setTimeout(function(){
-      getPlaces(where)
-    }, index * 5000);    
-  })
-} else {
+// if(allData){
+//   console.log(`Okey, dude, we will search in the ${postalCode.pc.length} postal codes from Madrid.`);
+//   [28045].forEach((where, index) => {
+//     setTimeout(function(){
+//       getPlaces(where)
+//     }, index * 5000);    
+//   })
+// } else {
   // console.log(`we are looking for ${what} in ${where} and we will look for more ${all}`) 
   getPlaces()
     .then(status => console.log(`Imported: ${status}`))
     .catch(err => console.log(`err: ${err}`))
-}
+// }
 
 
 function getPlaces (where = 28045, what='Restaurants', output='json') {
   return (
     axios.get(`https://maps.googleapis.com/maps/api/place/textsearch/${output}?query=${what}+in+${where}&fields=geometry&key=${GOOGLE_API}`)
-      .then(sleeper())      
+      .then(sleeper())
       .then(response => {
         let data = mapping(response.data.results);
         console.log(`Status: ${response.data.status}`)
