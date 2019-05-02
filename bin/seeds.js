@@ -33,7 +33,7 @@ if(!allData){
 
 function getPlaces (where = 28045, what='Restaurants', output='json') {
   return (
-    axios.get(`https://maps.googleapis.com/maps/api/place/textsearch/${output}?query=${what}+in+${where}&fields=geometry&key=${GOOGLE_API}`)
+    axios.get(`https://maps.googleapis.com/maps/api/place/textsearch/${output}?query=${what}+in+${where}+in+Madrid&fields=geometry&key=${GOOGLE_API}`)
       .then(sleeper())
       .then(response => {
         let data = mapping(response.data.results);
