@@ -1,31 +1,17 @@
+require('dotenv').config()
 const axios = require('axios')
 const GOOGLE_API = process.env.PLACES_API_KEY
 const mapping =  require('./../helpers/mapsParser').mapping; //custom parse for google map response
-// npm variables
 const importMongo = require('./importPlaces').importMongo
 const postalCode = require('./postalCodes');
-//! boolean not working
-// ? searchig in all the postal codes. 
-const allData = process.env.npm_config_allData || false
 
-// ** Connect to database. 
-  require('./../config/db.config') //r u sure?
-
-if(!allData){
-  console.log(`Okey, dude, we will search in ${postalCode.pc.length} postal codes from Madrid.`);
-  postalCode.pc.forEach((where, index) => {
-    setTimeout(function(){
-      getPlaces(where)
-        .then(status => console.log(`Imported: ${status} for ${where}`))
-    }, index * 6000);    
-  })
-} else {
-  // console.log(`we are looking for ${what} in ${where} and we will look for more ${all}`) 
-  getPlaces()
-    .then(status => console.log(`Imported: ${status}`))
-    .catch(err => console.log(`err: ${err}`))
-}
-
+console.log(`Okey, dude, we will search in ${postalCode.pc.length} postal codes from Madrid.`);
+postalCode.pc.forEach((where, index) => {
+  setTimeout(function(){
+    getPlaces(where)
+      .then(status => console.log(`Imported: ${status} for ${where}`))
+  }, index * 6000);    
+})
 
 function getPlaces (where = 28045, what='Restaurants', output='json') {
   return (
