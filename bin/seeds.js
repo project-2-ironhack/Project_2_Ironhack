@@ -40,12 +40,13 @@ function getPlaces (where = 28045, what='Restaurants', output='json') {
         if(response.data.next_page_token) {
           return  (
             moreData(response.data.next_page_token)
+              .then(sleeper())//sleeper para el tercer request
               .then(newData=>{
                 data = [...data, ...mapping(newData.data)]
                 console.log(`we found ${data.length} elements in the second page`)
                 if(newData.nxtToken){
                   return  (
-                    moreData(moreData.nxtToken)
+                    moreData(newData.nxtToken)
                       .then(newData=>{
                         data = [...data, ...mapping(newData.data)]                                    
                         console.log(`we found ${data.length} elements in the third page`)
@@ -70,7 +71,6 @@ const moreData = nxtToken => {
     axios.get(`https://maps.googleapis.com/maps/api/place/textsearch/json`, {         
     params: {pagetoken : nxtToken, key : GOOGLE_API,}
     })
-      .then(sleeper())//sleeper para el tercer request
       .then(response => {
         console.log(`Status: ${response.data.status}`)
         return {data: response.data.results, nxtToken: response.data.next_page_token}
