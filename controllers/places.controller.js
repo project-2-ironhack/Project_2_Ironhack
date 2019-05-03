@@ -20,7 +20,7 @@ module.exports.create = (req, res, next) => {
 module.exports.doCreate = (req, res, next) => {
   const place = new Place({
     name: req.body.name,
-    type: req.body.type,
+   type: req.body.type,
     geometry: {
       type: 'Point',
       coordinates: [req.body.longitude, req.body.latitude]
