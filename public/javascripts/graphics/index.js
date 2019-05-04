@@ -10,7 +10,7 @@ const creditCard = (params) => {
   axios.post('/dashboard/getData',{params :bbvaParams})
     .then(response => {
       console.log(response.data)
-      
+      pm
 
     })
     .catch(console.log)
