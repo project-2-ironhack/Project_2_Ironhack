@@ -11,6 +11,7 @@
   // Here i must to send the object. It could be with ajax. 
   // Or maybe, I could print it with hbs inside the script tags
   var places = JSON.parse(decodeURI('{{places}}')) 
+/*
   places = places.map(e=>{
     let lat = e["geometry"]["coordinates"][0] 
     let lng = e["geometry"]["coordinates"][1]
@@ -18,6 +19,7 @@
     e["geometry"]["coordinates"][1] = lat
     return e;
   })
+*/
   console.log(places)
   var map = new mapboxgl.Map({
     // container id specified in the HTML

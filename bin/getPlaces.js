@@ -1,15 +1,33 @@
 const axios = require('axios')
 const GOOGLE_API = process.env.PLACES_API_KEY
+const Place = require('./../models/places.model');
+const timeout = 2000;
 
-module.exports.getPlaces = (where, what, how) => {  
+module.exports.importPlaces = (list, type) => {  
+  const promises = list.map((zc, index) => {
+    return setTimeout(() =>{
+      return getPlaces(zc, type)
+        .then(status => console.log(`Imported: ${status} for ${zc}`))
+    }, index * timeout * 3);    
+  })
 
-    // function importPlaces(places) {
-    //   return 
-    // }
+  Promise.all(promises)
+    .then(() => {
+     
+    })
+
+}
+
+const getPlaces = (where, what) => {  
+  // ** Delete & Import to Mongo
+  importPlaces = (data) => {
+    return Place.create(mappingPlaces(data))
+        .then(imported =>  imported ? imported.length : 0)
+  }
 
   return (
     axios.get(`https://maps.googleapis.com/maps/api/place/textsearch/json?query=${what}+in+${where}+in+Madrid&fields=geometry&key=${GOOGLE_API}`)
-      .then(sleeper(2000))
+      .then(sleeper(timeout))
       .then(response => {
         let data = response.data.results;
         console.log(`Status: ${response.data.status}`)
@@ -17,7 +35,7 @@ module.exports.getPlaces = (where, what, how) => {
         if(response.data.next_page_token) {
           return  (
             moreData(response.data.next_page_token)
-              .then(sleeper())//sleeper para el tercer request
+              .then(sleeper(timeout))//sleeper para el tercer request
               .then(newData => {
                 data = [...data, ...newData.data]
                 console.log(`we found ${data.length} elements including the second page`)
@@ -27,16 +45,16 @@ module.exports.getPlaces = (where, what, how) => {
                       .then(newData=>{
                         data = [...data, ...newData.data]                                    
                         console.log(`we found ${data.length} elements including the third page`)
-                        return how(data)
+                        return importPlaces(data)
                       })    
                   )
                 } else {
-                  return how(data)
+                  return importPlaces(data)
                 }
               })
           )
         } else {
-          return how(data)
+          return importPlaces(data)
         }
       })
   )
@@ -48,7 +66,8 @@ const moreData = nxtToken => {
       params: {pagetoken : nxtToken, key : GOOGLE_API,}
     })
       .then(response => {
-        // console.log(`Status: ${response.data.status}`)
+        if(response.data.status != 'OK')
+          console.log(`Status: ${response.data.status}`)
         return {data: response.data.results, nxtToken: response.data.next_page_token}
       })
       .catch(err => console.log(err))
@@ -62,4 +81,33 @@ const moreData = nxtToken => {
  */
 const  sleeper = delay => {
   return (x) => new Promise(resolve => setTimeout(() => resolve(x), delay));
+}
+
+const mappingPlaces = data => {
+  const pc = (string) => string.match(/28(\d+){3}/)[0] 
+  return data.map( e => {
+    return new Place({
+      name : e.name,
+      type: "Feature",      
+      geometry: {
+        type: 'Point',
+        coordinates: [
+          //*  Note that longitude comes first in 
+          // * a GeoJSON coordinate array, not latitude.
+          e.geometry.location.lng,
+          e.geometry.location.lat,
+        ]
+      }, 
+      properties : {
+        address: e.formatted_address,
+        googleId: e.id,
+        priceLevel : e.price_level,
+        types : e.types,
+        postalCode: pc(e.formatted_address),
+        city: 'Madrid',
+        country: 'Spain',
+        icon: e.icon
+      }
+    })
+  })
 }

@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 
 const zipCodesSchema = new mongoose.Schema({
-  place_id: String,
+  name: String,
   geometry: { //location
     location_type: String,
     location: [Number],
@@ -10,6 +10,12 @@ const zipCodesSchema = new mongoose.Schema({
       southwest: [Number]
     }
   },
+  properties: {
+    googleId: String,
+    types : String,
+    city: String,
+    country: String,
+  }
 },{ timestamps: true })
 
 zipCodesSchema.index({geometry: '2dsphere'})
