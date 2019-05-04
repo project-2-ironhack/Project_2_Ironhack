@@ -1,21 +1,20 @@
 const axios = require('axios')
+const mongoose = require('mongoose');
+
 const GOOGLE_API = process.env.PLACES_API_KEY
 const Place = require('./../models/places.model');
 const timeout = 2000;
 
 module.exports.importPlaces = (list, type) => {  
-  const promises = list.map((zc, index) => {
-    return setTimeout(() =>{
-      return getPlaces(zc, type)
-        .then(status => console.log(`Imported: ${status} for ${zc}`))
-    }, index * timeout * 3);    
+  // ** Connect to database. 
+  require('./../config/db.config') //r u sure?
+
+  const promises = list.map(zc => {
+    return getPlaces(zc, type)
+      .then(status => console.log(`Imported: ${status} for ${zc}`))
   })
 
-  Promise.all(promises)
-    .then(() => {
-     
-    })
-
+  Promise.all(promises).then(() => mongoose.connection.close())
 }
 
 const getPlaces = (where, what) => {  
@@ -23,6 +22,7 @@ const getPlaces = (where, what) => {
   importPlaces = (data) => {
     return Place.create(mappingPlaces(data))
         .then(imported =>  imported ? imported.length : 0)
+        .catch(err => console.error(err))
   }
 
   return (
@@ -31,20 +31,20 @@ const getPlaces = (where, what) => {
       .then(response => {
         let data = response.data.results;
         console.log(`Status: ${response.data.status}`)
-        console.log(`we found ${data.length} elements in the first page`)
+        console.log(`we found ${data.length} elements for ${where} in the first page`)
         if(response.data.next_page_token) {
           return  (
             moreData(response.data.next_page_token)
               .then(sleeper(timeout))//sleeper para el tercer request
               .then(newData => {
                 data = [...data, ...newData.data]
-                console.log(`we found ${data.length} elements including the second page`)
+                console.log(`we found ${data.length} elements for ${where} in the second page`)
                 if(newData.nxtToken){
                   return  (
                     moreData(newData.nxtToken)
                       .then(newData=>{
                         data = [...data, ...newData.data]                                    
-                        console.log(`we found ${data.length} elements including the third page`)
+                        console.log(`we found ${data.length} elements for ${where} in the third page`)
                         return importPlaces(data)
                       })    
                   )
@@ -66,8 +66,6 @@ const moreData = nxtToken => {
       params: {pagetoken : nxtToken, key : GOOGLE_API,}
     })
       .then(response => {
-        if(response.data.status != 'OK')
-          console.log(`Status: ${response.data.status}`)
         return {data: response.data.results, nxtToken: response.data.next_page_token}
       })
       .catch(err => console.log(err))
