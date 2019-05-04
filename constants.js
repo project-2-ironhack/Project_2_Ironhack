@@ -1,4 +1,1 @@
-module.exports.PLACE_CATEGORIES = [
-  'bookstore',
-  'coffeshop',
-]
+module.exports.PLACE_CATEGORIES = ['bookstore','coffeshop',]
