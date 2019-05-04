@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 
 const zipCodesSchema = new mongoose.Schema({
-  place_id: string,
+  place_id: String,
   geometry: { //location
     location_type: String,
     location: [Number],

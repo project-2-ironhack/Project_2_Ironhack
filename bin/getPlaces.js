@@ -1,42 +1,44 @@
 const axios = require('axios')
 const GOOGLE_API = process.env.PLACES_API_KEY
-const mapping =  require('./../helpers/mapsParser').mapping; //custom parse for google map response
 
-module.exports.getPlaces = (where, what, how) => {
-  
+module.exports.getPlaces = (where, what, how) => {  
+
+    // function importPlaces(places) {
+    //   return 
+    // }
+
   return (
     axios.get(`https://maps.googleapis.com/maps/api/place/textsearch/json?query=${what}+in+${where}+in+Madrid&fields=geometry&key=${GOOGLE_API}`)
-      .then(sleeper())
+      .then(sleeper(2000))
       .then(response => {
-        let data = mapping(response.data.results);
+        let data = response.data.results;
         console.log(`Status: ${response.data.status}`)
         console.log(`we found ${data.length} elements in the first page`)
         if(response.data.next_page_token) {
           return  (
             moreData(response.data.next_page_token)
               .then(sleeper())//sleeper para el tercer request
-              .then(newData=>{
-                data = [...data, ...mapping(newData.data)]
+              .then(newData => {
+                data = [...data, ...newData.data]
                 console.log(`we found ${data.length} elements including the second page`)
                 if(newData.nxtToken){
                   return  (
                     moreData(newData.nxtToken)
                       .then(newData=>{
-                        data = [...data, ...mapping(newData.data)]                                    
+                        data = [...data, ...newData.data]                                    
                         console.log(`we found ${data.length} elements including the third page`)
-                        return how(data).then(status=>status)
+                        return how(data)
                       })    
                   )
                 } else {
-                  return how(data).then(status=>status)
+                  return how(data)
                 }
               })
           )
         } else {
-          return how(data).then(status=>status)
+          return how(data)
         }
       })
-      .catch(error => console.log(error))
   )
 }
 
@@ -58,8 +60,6 @@ const moreData = nxtToken => {
 * Requesting the next page before it is available will return an INVALID_REQUEST response. 
 * Retrying the request with the same next_page_token will return the next page of results.
  */
-const  sleeper = (ms = 2000) => {
-  return function(x) {
-    return new Promise(resolve => setTimeout(() => resolve(x), ms));
-  };
+const  sleeper = delay => {
+  return (x) => new Promise(resolve => setTimeout(() => resolve(x), delay));
 }
