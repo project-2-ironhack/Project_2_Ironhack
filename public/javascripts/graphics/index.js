@@ -1,18 +1,22 @@
 // definir mejor esta constante para uqe los parametros de la funcion sean variables(quizas una clase)
+
+
 const graphList = [
   {name:'creditCard',
   }]
 
-const creditCard = (params,domPlace) => {
-  console.log(params)
+const creditCard = (params) => {
+  var ctx = document.getElementById('creditCard').getContext('2d');
   //Habria que modificar esta funcion si se modifican estos parametros
   //De momento está hecho para un sól,o lemento del array habria que hacer recorrelos o quizás poner las fechas más absolutas
   const graphData = params.map((data) => {
-    return {date:data.date, cards:data.zipcodes[0].cards}
+    return data.zipcodes[0].cards
+   })
+   const graphLabel = params.map((data) => {
+     return data.date
    })
    console.log(graphData)
-  barCreditCard(graphData,domPlace)
-
+   drawCreditCard(graphLabel,graphData,ctx)
 }
 
 // cambiar onload por window.addEventListener
