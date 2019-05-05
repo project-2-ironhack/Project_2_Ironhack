@@ -1,6 +1,6 @@
-const Graph = ['Barras', 'Pie', 'etc']
+const  Categories = ['Barras', 'Pie', 'etc']
 const kinds = ['Supermarket', 'Coffee', 'Shops']
-const Categories = ['creditCard', 'somethingElse', 'etc']
+const Graph = ['creditCard', 'somethingElse', 'etc']
 
 const mongoose = require('mongoose');
 const ZipCodes = require('./../models/zipCodes.model');

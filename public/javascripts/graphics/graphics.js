@@ -12,9 +12,14 @@ const drawCreditCard = (labels,data,ctx) => {
       scales: {
           xAxes: [{
               barPercentage: 0.5,
-              barThickness: 6,
-              maxBarThickness: 8,
+              barThickness: 10,
+              maxBarThickness: 10,
               minBarLength: 0,
+          }],
+          yAxes: [{
+              ticks: {
+                beginAtZero: true
+              }
           }]
       }
   }

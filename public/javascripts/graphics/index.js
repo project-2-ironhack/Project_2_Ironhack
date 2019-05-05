@@ -15,7 +15,6 @@ const creditCard = (params) => {
    const graphLabel = params.map((data) => {
      return data.date
    })
-   console.log(graphData)
    drawCreditCard(graphLabel,graphData,ctx)
 }
 
