@@ -1,5 +1,8 @@
 const bbvaService = require('../services/bbva.service');
 const Query = require('../models/query.model');
+const token =  process.env.MAPBOX_TOKEN || 'pk.eyJ1IjoidmFscm9iIiwiYSI6ImNqdXBvZjF1cDExZ3U0NXBwZm93NnRmYjMifQ.tgbRWqyCJLXEAgqBb2hPNA'  
+const Place = require('../models/places.model');
+const ZipCodes = require('./../models/zipCodes.model');
 
 module.exports.display = (req,res,next) => {    
   Query.findById(req.params.id)
@@ -11,13 +14,30 @@ module.exports.display = (req,res,next) => {
 
       Promise.all(promises)
         .then((queries) => {
-          console.log(queries.length)
           const graphs = queries.map((info, i) => {
             return Object.assign( query.graph[i],{data:JSON.stringify(info)})
           });
-          res.render('dashboard/list', { dashboard:true, graphs })
+          ZipCodes.findOne({name:query.zipCode})
+            .then((zipCode)=>{
+              console.log(zipCode)
+              const zipCodeCoords = encodeURI(JSON.stringify(zipCode))
+              Place.find({'properties.postalCode' : zipCode.name})
+                .then(placeData => {
+                  const places = encodeURI(JSON.stringify(placeData))
+                  res.render('dashboard/list', { 
+                    showMap: true,
+                    dashboard:true, 
+                    graphs, 
+                    places, 
+                    zipCodeCoords, 
+                    token
+                  })
+                })
+                .catch(next)
+            })
+            .catch(next)
         })
-        .catch(error => next(error))
+        .catch(next)
 
     } else {
       res.redirect('/set')

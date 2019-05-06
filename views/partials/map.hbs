@@ -4,15 +4,15 @@
   // Here i must to send the object. It could be with ajax. 
   // Or maybe, I could print it with hbs inside the script tags
   var places = JSON.parse(decodeURI('{{places}}')) 
+  var zipCodes = JSON.parse(decodeURI('{{zipCodeCoords}}'))
 
-  console.log(places)
   var map = new mapboxgl.Map({
     // container id specified in the HTML
     container: 'map',
     // style URL
     style: 'mapbox://styles/mapbox/light-v10',
     // initial position in [lon, lat] format
-    center: [-3.692622799999999, 40.3967513],
+    center: zipCodes.location.coordinates,
     // initial zoom
     zoom: 15, 
 /*    maxBounds: [
