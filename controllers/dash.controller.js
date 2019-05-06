@@ -5,14 +5,16 @@ module.exports.display = (req,res,next) => {
   Query.findById(req.params.id)
   .then(query => {
     if (query) { 
-      const promises = query.graphs.map((graph) => {
-        return bbvaService.getData({min: '201501', max: '201502'})
+      const promises = query.graph.map((graph) => {
+        return bbvaService.getData({min: query.minDate, max: query.maxDate}, query.zipCode )
       })
 
       Promise.all(promises)
         .then((queries) => {
+          console.log(queries.length)
           const graphs = queries.map((info, i) => {
-          return Object.assign( req.body.graphs[i],{data:JSON.stringify(info)})});
+            return Object.assign( query.graph[i],{data:JSON.stringify(info)})
+          });
           res.render('dashboard/list', { dashboard:true, graphs })
         })
         .catch(error => next(error))
