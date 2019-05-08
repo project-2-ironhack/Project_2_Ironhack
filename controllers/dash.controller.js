@@ -3,13 +3,39 @@ const Query = require('../models/query.model');
 const token =  process.env.MAPBOX_TOKEN || 'pk.eyJ1IjoidmFscm9iIiwiYSI6ImNqdXBvZjF1cDExZ3U0NXBwZm93NnRmYjMifQ.tgbRWqyCJLXEAgqBb2hPNA'  
 const Place = require('../models/places.model');
 const ZipCodes = require('./../models/zipCodes.model');
-
+const apiParams = [{
+  name: 'AvgTransactionsByAgeRange',
+  apiParam : 'ages.genres'
+},
+{
+name: 'AvgTransactionsValueByPeriod',
+apiParam : 'none'
+},
+{
+  name: 'MerchantsByCategories',
+  apiParam : 'categories'
+},
+{
+  name: 'EstSalesByCategory',
+  apiParam : 'categories'
+},
+{
+  name: 'SalesEvolutionCategories',
+  apiParam : 'categories'
+}, 
+{
+  name: 'AvgTransactionsValueByCategory',
+  apiParam : 'categories'
+},  
+]
 module.exports.display = (req,res,next) => {    
   Query.findById(req.params.id)
   .then(query => {
     if (query) { 
       const promises = query.graph.map((graph) => {
-        return bbvaService.getData({min: query.minDate, max: query.maxDate}, query.zipCode )
+        const apiParamNeeded = apiParams.filter(graphParams => graphParams.name === graph)
+        // console.log(apiParamNeeded[0].apiParam)
+        return bbvaService.getData({min: query.minDate, max: query.maxDate}, apiParamNeeded[0].apiParam, query.zipCode )
       })
 
       Promise.all(promises)
@@ -46,3 +72,18 @@ module.exports.display = (req,res,next) => {
   .catch(error => next(error));
 }
 
+// module.exports.display = (req,res,next) => {
+ 
+//   const promises = req.body.graphs.map((graph) => {
+//     const apiParamNeeded = apiParams.filter(graphParams => graphParams.name === graph.type)
+//     console.log(apiParamNeeded[0].apiParam)
+//     return bbvaService.getData({min: '201501', max: '201512'},apiParamNeeded[0].apiParam)
+//   })
+
+//   Promise.all(promises)
+//     .then((queries) => {
+//       const graphs = queries.map((info, i) => {
+//         return Object.assign( req.body.graphs[i],{data:JSON.stringify(info)})});
+//       res.render('dashboard/list', { dashboard:true, graphs })
+//     })
+//     .catch(error => next(error))

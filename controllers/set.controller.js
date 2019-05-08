@@ -1,5 +1,5 @@
 const types = ['Supermarket', 'Coffee', 'Shops']
-const categories = ['creditCard', 'somethingElse', 'etc']
+const categories = ['AvgTransactionsByAgeRange', 'AvgTransactionsValueByPeriod', 'MerchantsByCategories','EstSalesByCategory','SalesEvolutionCategories','AvgTransactionsValueByCategory']
 
 const mongoose = require('mongoose');
 const ZipCodes = require('./../models/zipCodes.model');

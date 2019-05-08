@@ -3,6 +3,6 @@
 <div class='graphs-table'>
   {{#each graphs as |graph|}}
   {{!-- info.x habria que cambiarlo cuando redefinamos set --}}
-    <canvas id={{graph.info.x}} data-params={{graph.data}} class="graphs"></canvas>
+    <canvas id={{graph.type}} data-params={{graph.data}} class="graphs"></canvas>
   {{/each}}
 </div>
