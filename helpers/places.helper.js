@@ -7,3 +7,10 @@ hbs.registerHelper('isMainCategory', function (place, category, options) {
     return options.inverse(this)
   }
 });
+hbs.registerHelper('hasCategory', function(book, category, options) {
+  if(book.categories.includes(category)) {
+    return options.fn(this)
+  } else {
+    return options.inverse(this) 
+  }
+});

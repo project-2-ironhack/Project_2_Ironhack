@@ -14,12 +14,15 @@ const authenticate = () => {
     ).then(res => res.data.access_token)
 }
 
-module.exports.getData = (dateRange,extraParam, origin = 'zipcodes', zipcode = 28002) => {
+// 
+
+module.exports.getData = (dateRange, extraParam, zipcode) => {
   return authenticate()
     .then(accessToken => {
+      console.log(dateRange, extraParam, zipcode)
       return http.get(`/paystats_sbx/4/zipcodes/${zipcode}/origin_distribution`, {
         params: {
-          'origin_type' : origin,
+          'origin_type' : 'zipcodes',
           'min_date' : dateRange.min,
           'max_date' : dateRange.max,
           'expand': extraParam

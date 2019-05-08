@@ -1,4 +1,5 @@
 const drawAvgTransactionsValueByPeriod = (labels,data,ctx) => {
+  console.log('still ok')
   var myBarChart = new Chart(ctx, {
     type: 'bar',
     data: {labels: labels,

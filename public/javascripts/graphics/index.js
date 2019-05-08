@@ -3,7 +3,9 @@
 
 
 const avgTransactionsValueByPeriod = (params,graphId) => {
+
   var ctx = document.getElementById(graphId).getContext('2d');
+  console.log('ok')
   //Habria que modificar esta funcion si se modifican estos parametros
   //De momento está hecho para un sól,o lemento del array habria que hacer recorrelos o quizás poner las fechas más absolutas
   const graphData = params.map((data) => {

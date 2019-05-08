@@ -4,7 +4,7 @@
   // Here i must to send the object. It could be with ajax. 
   // Or maybe, I could print it with hbs inside the script tags
   var places = JSON.parse(decodeURI('{{places}}')) 
-
+  var zipCodes = JSON.parse(decodeURI('{{zipCodeCoords}}'))
   console.log(places)
   var map = new mapboxgl.Map({
     // container id specified in the HTML
@@ -12,15 +12,15 @@
     // style URL
     style: 'mapbox://styles/mapbox/light-v10',
     // initial position in [lon, lat] format
-    center: [-3.692622799999999, 40.3967513],
+    center: zipCodes.location.coordinates,
     // initial zoom
     zoom: 15, 
-/*    maxBounds: [
+    maxBounds: [
       // Recorrer las coordenadas y buscar los puntos más alejados en norte y sur
-      [-74.04728500751165, 40.68392799015035], // Southwest coordinates
-      [-73.91058699000139, 40.87764500765852]  // Northeast coordinates
+      zipCodes.southwest.coordinates, // Southwest coordinates
+      zipCodes.northeast.coordinates  // Northeast coordinates
     ]
-    */
+    
   });
   map.on('load', function(e) {    
     // Add a new source from our GeoJSON data and set the
@@ -84,16 +84,9 @@
       }
     });
     // inspect a cluster on click
-    map.on('click', 'clusters', function (e) {
-      var features = map.queryRenderedFeatures(e.point, { layers: ['clusters'] });
-      var clusterId = features[0].properties.cluster_id;
-      map.getSource('earthquakes').getClusterExpansionZoom(clusterId, function (err, zoom) {
-        if (err) return;        
-        map.easeTo({
-          center: features[0].geometry.coordinates,
-          zoom: zoom
-        });
-      });
-    });
+
+
+
+
   });
 </script>
