@@ -1,4 +1,4 @@
-const types = ['Supermarket', 'Coffee', 'Shops']
+const placesObj = require('./../data/establecimientos').places
 const categories = require('./../constants').API_PARAMS.map(e=>e.name)
 const mongoose = require('mongoose');
 const ZipCodes = require('./../models/zipCodes.model');
@@ -7,8 +7,11 @@ const Query = require('../models/query.model');
 module.exports.create = (req,res,next) => {
   ZipCodes.find()
     .then(arrZipCodes => {
-      zipCodes = arrZipCodes.map(e => e.name)
-      res.render('set/form', {types, categories, zipCodes})
+      res.render('set/form', {
+        types : placesObj, 
+        categories, 
+        zipCodes : arrZipCodes.map(e => e.name)
+      })
     })
     .catch(next)
 }
