@@ -1,6 +1,5 @@
 const types = ['Supermarket', 'Coffee', 'Shops']
-const categories = ['AvgTransactionsByAgeRange', 'AvgTransactionsValueByPeriod', 'MerchantsByCategories','EstSalesByCategory','SalesEvolutionCategories','AvgTransactionsValueByCategory']
-
+const categories = require('./../constants').API_PARAMS.map(e=>e.name)
 const mongoose = require('mongoose');
 const ZipCodes = require('./../models/zipCodes.model');
 const Query = require('../models/query.model');
