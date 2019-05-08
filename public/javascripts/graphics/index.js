@@ -2,9 +2,8 @@
 
 
 
-const avgTransactionsValueByPeriod = (params) => {
-   console.log('ok')
-  var ctx = document.getElementById('AvgTransactionsValueByPeriod').getContext('2d');
+const avgTransactionsValueByPeriod = (params,graphId) => {
+  var ctx = document.getElementById(graphId).getContext('2d');
   //Habria que modificar esta funcion si se modifican estos parametros
   //De momento está hecho para un sól,o lemento del array habria que hacer recorrelos o quizás poner las fechas más absolutas
   const graphData = params.map((data) => {
@@ -15,6 +14,21 @@ const avgTransactionsValueByPeriod = (params) => {
    })
    drawAvgTransactionsValueByPeriod(graphLabel,graphData,ctx)
 }
+
+const avgTransactionsByAgeRange = (params,graphId) => {
+  var ctx = document.getElementById(graphId).getContext('2d');
+  const graphData = params.map((data)=>{
+  })
+
+}
+
+const merchantsByCategories = (params,graphId) => {
+  var ctx = document.getElementById(graphId).getContext('2d');
+  const graphData = params.map((data)=>{
+  })
+}
+
+
 
 // cambiar onload por window.addEventListener
 window.addEventListener('load', function()  {
@@ -27,6 +41,12 @@ window.addEventListener('load', function()  {
     switch (graphId) {
       case 'AvgTransactionsValueByPeriod':
         avgTransactionsValueByPeriod(params,graphId);
+        break;
+      case 'AvgTransactionsByAgeRange':
+        avgTransactionsByAgeRange(params,graphId);
+        break;
+      case 'MerchantsByCategories':
+        merchantsByCategories(params,graphId);
         break;
     }
   })

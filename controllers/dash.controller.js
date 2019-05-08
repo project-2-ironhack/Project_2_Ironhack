@@ -4,7 +4,7 @@ const bbvaService = require('../services/bbva.service');
 
 const apiParams = [{
   name: 'AvgTransactionsByAgeRange',
-  apiParam : 'ages.genres'
+  apiParam : 'ages.genders'
 },
 {
 name: 'AvgTransactionsValueByPeriod',
