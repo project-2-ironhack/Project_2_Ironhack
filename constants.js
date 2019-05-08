@@ -1,7 +1,7 @@
 module.exports.PLACE_CATEGORIES = ['bookstore','coffeshop',]
 module.exports.API_PARAMS = [{
   name: 'AvgTransactionsByAgeRange',
-  apiParam : 'ages.genres'
+  apiParam : 'ages.genders'
 },
 {
 name: 'AvgTransactionsValueByPeriod',

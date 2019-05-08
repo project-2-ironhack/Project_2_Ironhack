@@ -17,6 +17,7 @@ const authenticate = () => {
 module.exports.getData = (dateRange, extraParam, zipcode) => {
   return authenticate()
     .then(accessToken => {
+      console.log(dateRange, extraParam, zipcode)
       return http.get(`/paystats_sbx/4/zipcodes/${zipcode}/origin_distribution`, {
         params: {
           'origin_type' : 'zipcodes',
