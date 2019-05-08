@@ -1,9 +1,9 @@
-const drawCreditCard = (labels,data,ctx) => {
+const drawAvgTransactionsValueByPeriod = (labels,data,ctx) => {
   var myBarChart = new Chart(ctx, {
     type: 'bar',
     data: {labels: labels,
         datasets: [{
-          label: 'Evolution Credit Cards Usage',
+          label: 'Avg Transactions Value By Period',
           backgroundColor: 'rgb(255, 99, 132)',
           borderColor: 'rgb(255, 99, 132)',
           data: data

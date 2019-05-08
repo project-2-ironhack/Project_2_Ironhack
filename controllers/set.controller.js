@@ -1,6 +1,6 @@
 const  Categories = ['Barras', 'Pie', 'etc']
 const kinds = ['Supermarket', 'Coffee', 'Shops']
-const Graph = ['creditCard', 'somethingElse', 'etc']
+const Graph = ['AvgTransactionsByAgeRange', 'AvgTransactionsValueByPeriod', 'MerchantsByCategories','EstSalesByCategory','SalesEvolutionCategories','AvgTransactionsValueByCategory']
 
 const mongoose = require('mongoose');
 const ZipCodes = require('./../models/zipCodes.model');
