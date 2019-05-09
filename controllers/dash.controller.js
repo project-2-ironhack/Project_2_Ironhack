@@ -38,12 +38,8 @@ module.exports.display = (req,res,next) => {
                       token
                     })
                   })
-                  .catch(next)
               })
-              .catch(next)
           })
-          .catch(next)
-
       } else {
         res.redirect('/set')
       }

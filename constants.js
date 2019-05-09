@@ -16,10 +16,6 @@ apiParam : 'none'
   apiParam : 'categories'
 },
 {
-  name: 'SalesEvolutionCategories',
-  apiParam : 'categories'
-}, 
-{
   name: 'AvgTransactionsValueByCategory',
   apiParam : 'categories'
 },  

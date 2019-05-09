@@ -1,10 +1,9 @@
 const drawAvgTransactionsValueByPeriod = (labels,data,ctx) => {
-  console.log('still ok')
   var myBarChart = new Chart(ctx, {
     type: 'bar',
-    data: {labels: labels,
+    data: {
+      labels: labels,
         datasets: [{
-          label: 'Avg Transactions Value By Period',
           backgroundColor: 'rgb(255, 99, 132)',
           borderColor: 'rgb(255, 99, 132)',
           data: data
@@ -22,45 +21,36 @@ const drawAvgTransactionsValueByPeriod = (labels,data,ctx) => {
                 beginAtZero: true
               }
           }]
+      },
+      responsive: true,
+      legend: {
+        position: 'right',
+        display: false
+      },
+      title: {
+        display: true,
+        text: 'Average Transactions by Age Range'
       }
   }
   });
 }
 
 const drawAvgTransactionsByAgeRange = (labels,data,ctx) =>{
-
-  var MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-  var color = Chart.helpers.color;
   var horizontalBarChartData = new Chart(ctx,{
+    type: 'horizontalBar',
     data:{
-    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+    labels:labels,
     datasets: [{
       label: 'Male',
-      backgroundColor: color(window.chartColors.red).alpha(0.5).rgbString(),
-      borderColor: window.chartColors.red,
+      backgroundColor: 'red',
+      borderColor: 'red',
       borderWidth: 1,
-      data: [
-        randomScalingFactor(),
-        randomScalingFactor(),
-        randomScalingFactor(),
-        randomScalingFactor(),
-        randomScalingFactor(),
-        randomScalingFactor(),
-        randomScalingFactor()
-      ]
+      data: data.dataSetMale
     }, {
       label: 'Female',
-      backgroundColor: color(window.chartColors.blue).alpha(0.5).rgbString(),
-      borderColor: window.chartColors.blue,
-      data: [
-        randomScalingFactor(),
-        randomScalingFactor(),
-        randomScalingFactor(),
-        randomScalingFactor(),
-        randomScalingFactor(),
-        randomScalingFactor(),
-        randomScalingFactor()
-      ]
+      backgroundColor: 'blue',
+      borderColor: 'blue',
+      data: data.dataSetFemale
     }]},
     options: {
       // Elements options apply to all of the options unless overridden in a dataset
@@ -76,11 +66,111 @@ const drawAvgTransactionsByAgeRange = (labels,data,ctx) =>{
       },
       title: {
         display: true,
-        text: 'Chart.js Horizontal Bar Chart'
+        text: 'Average Transactions by Age Range'
       }
     }
   });
 }
+
+const drawMerchantsByCategories = (labels,data,ctx) => {
+  var myDoughnut = new Chart(ctx,{
+    type: 'doughnut',
+    data: {
+      labels: labels,
+      datasets: [{
+        data: data,
+        // cambiar esto por un random de colores
+        backgroundColor: ['red','blue','yellow','lightblue','pink','grey','darkGrey','darkcyan','green','limegreen','orange','orangered','lightcoral','lightpink','lightsalmon'],
+      }],
+    },
+    options: {
+      responsive: true,
+      legend: {
+        position: 'top',
+        display: false
+      },
+      title: {
+        display: true,
+        text: 'Merchants By Categories'
+      },
+      animation: {
+        animateScale: true,
+        animateRotate: true
+      },
+      scaleLabels: {
+        labelString:'Percentage'
+      }
+    }
+  })
+}
+
+const drawEstSalesByCategory = (labels,data,ctx) => {
+  var myBarChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: labels,
+        datasets: [{
+          backgroundColor: 'rgb(255, 99, 132)',
+          borderColor: 'rgb(255, 99, 132)',
+          data: data
+      }]},
+    options: {
+      scales: {
+          xAxes: [{
+              barPercentage: 0.5,
+              barThickness: 10,
+              maxBarThickness: 10,
+              minBarLength: 0,
+          }],
+          yAxes: [{
+              ticks: {
+                beginAtZero: true
+              }
+          }]
+      },
+      responsive: true,
+      legend: {
+        position: 'right',
+        display: false
+      },
+      title: {
+        display: true,
+        text: 'Average Transactions by Age Range'
+      }
+  }
+  });
+}
+
+const drawAvgTransactionsValueByCategory = (labels,data,ctx) => {
+  var myRadar = new Chart(ctx,{
+    type: 'radar',
+    data: {
+      labels: labels,
+      datasets: [{
+        borderColor: 'lightcoral',
+        backgroundColor: 'red',
+        pointBackgroundColor: 'lightcoral',
+        data: data
+      }]
+    },
+    options: {
+      title: {
+        display: true,
+        text: 'Average Transaction Velue By Category'
+      },
+      elements: {
+        line: {
+          tension: 0.0,
+        }
+      },
+      scale: {
+        beginAtZero: true,
+      }
+    }
+  })
+}
+
+
 
 
 
