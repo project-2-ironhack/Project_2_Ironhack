@@ -1,23 +1,3 @@
-// definir mejor esta constante para uqe los parametros de la funcion sean variables(quizas una clase)
-
-
-const graphList = [
-  {name:'creditCard',
-  }]
-
-const creditCard = (params) => {
-  var ctx = document.getElementById('creditCard').getContext('2d');
-  //Habria que modificar esta funcion si se modifican estos parametros
-  //De momento está hecho para un sól,o lemento del array habria que hacer recorrelos o quizás poner las fechas más absolutas
-  const graphData = params.map((data) => {
-    return data.zipcodes[0].cards
-   })
-   const graphLabel = params.map((data) => {
-     return data.date
-   })
-   console.log(graphData)
-   drawCreditCard(graphLabel,graphData,ctx)
-}
 
 // cambiar onload por window.addEventListener
 window.addEventListener('load', function()  {
@@ -27,9 +7,22 @@ window.addEventListener('load', function()  {
   graphsNodes.forEach(graphNode => {
     const graphId = graphNode.id
     const params = JSON.parse(graphNode.getAttribute('data-params'))
+    const ctx = document.getElementById(graphId).getContext('2d');
     switch (graphId) {
-      case 'creditCard':
-        creditCard(params,graphId);
+      case 'AvgTransactionsValueByPeriod':
+        avgTransactionsValueByPeriod(params,ctx);
+        break;
+      case 'AvgTransactionsByAgeRange':
+        avgTransactionsByAgeRange(params,ctx);
+        break;
+      case 'MerchantsByCategories':
+        merchantsByCategories(params,ctx);
+        break;
+      case 'EstSalesByCategory':
+        estSalesByCategory(params,ctx);
+        break;
+      case 'AvgTransactionsValueByCategory':
+        avgTransactionsValueByCategory(params,ctx);
         break;
     }
   })

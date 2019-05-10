@@ -5,7 +5,7 @@ const queryModel = new mongoose.Schema({
   minDate: Number, 
   maxDate: Number, 
   establecimiento: String, 
-  gráfica: [{
+  graph: [{
     type: String, 
     // enum : []
   }]
