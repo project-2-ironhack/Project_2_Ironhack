@@ -1,9 +1,17 @@
-{{>map}}
-
-<div class='graphs-table'>
-  {{#each graphs as |graph|}}
-  {{!-- info.x habria que cambiarlo cuando redefinamos set --}}
-    <canvas id={{graph.type}} data-params={{graph.data}} class="graphs"></canvas>
-  {{/each}}
+<div class='main-container'>
+  <div class='row color-white'>
+    <div class='col color-white'>
+      {{>map}}
+    </div>
+    <div class='col color-white'>
+        <div class='graphs-table'>
+        {{#each graphs as |graph|}}
+          <canvas id={{graph.type}} data-params={{graph.data}} class="graphs"></canvas>
+        {{/each}}
+      </div>
+    </div>
+  </div>
 </div>
+
+
 
