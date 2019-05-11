@@ -24,14 +24,84 @@ function number_format(number, decimals, dec_point, thousands_sep) {
 }
 const monthLabel = [{name: 'Jan', data:'201501'},{name: 'Feb', data:'201502'},{name: 'Mar', data:'201503'},{name: 'Apr', data:'201504'},{name: 'May', data:'201505'},{name: 'Jun', data:'201506'},{name: 'Jul', data:'201507'},{name: 'Aug', data:'201508'},{name: 'Sep', data:'201509'},{name: 'Oct', data:'201510'},{name: 'Nov', data:'201511'},{name: 'Dec', data:'201512'}]
 
+ const placesLabel = [
+	{
+		data: 'es_auto',
+		name: 'Cars',
+  },
+  {
+		data: 'es_bank',
+		name: 'Bank',
+	},
+	{
+		data: 'es_barsandrestaurants',
+		name: 'Bar y Restaurants',
+	},
+	{
+		data: 'es_contents',
+		name: 'Contents',
+	},
+	{
+		data: 'es_fashion',
+		name: 'Fashion',
+	},
+	{
+		data: 'es_food',
+		name: 'Food',
+	},
+	{
+		data: 'es_health',
+		name: 'Health',
+	},
+	{
+		data: 'es_home',
+		name: 'Home',
+	},
+	{
+		data: 'es_hotelservices',
+		name: 'Hotels',
+	},
+	{
+		data: 'es_hyper',
+		name: 'Supermarket',
+	},
+	{
+		data: 'es_leisure',
+		name: 'Leisure',
+	},
+	{
+		data: 'es_otherservices',
+		name: 'Other services',
+	},
+	{
+		data: 'es_sportsandtoys',
+		name: 'Sport',
+	},
+	{
+		data: 'es_tech',
+		name: 'Tech',
+	},
+	{
+		data: 'es_transportation',
+		name: 'Transportation',
+	},
+	{
+		data: 'es_travel',
+				name: 'Travel',
+	},
+	{
+		data: 'es_wellnessandbeauty',
+		name: 'Wellness & Beauty',
+	},
+	{
+		data: 'es_filtered',
+		name: 'Filtros',
+	},
+]
 
 const transformData = (arr,keyConverter) => {
   return keyConverter.filter(key => arr.includes(key.data)).map(dateObject => dateObject.name) 
 }
-
-
-
-
 
 const drawAvgTransactionsValueByPeriod = (labels,data,ctx) => {
     var myBarChart = new Chart(ctx, {
@@ -47,9 +117,11 @@ const drawAvgTransactionsValueByPeriod = (labels,data,ctx) => {
         }],
       },
       options: {
+        responsive: true,
         title: {
           display: true,
-          text: 'Avg. Transactions Value By Period'
+          text: 'Avg. Transactions Value By Period',
+          padding: 20
         },
         maintainAspectRatio: false,
         layout: {
@@ -67,7 +139,7 @@ const drawAvgTransactionsValueByPeriod = (labels,data,ctx) => {
             },
             gridLines: {
               display: false,
-              drawBorder: false
+              drawBorder: true
             },
             ticks: {
               maxTicksLimit: 6
@@ -75,9 +147,10 @@ const drawAvgTransactionsValueByPeriod = (labels,data,ctx) => {
             maxBarThickness: 25,
           }],
           yAxes: [{
+            display: false,
             ticks: {
               min: 0,
-              max: Math.ceil(Math.max(...data)/10)*10,
+              max: Math.max(...data),
               maxTicksLimit: 5,
               padding: 10,
               // Include a dollar sign in the ticks
@@ -127,14 +200,15 @@ const drawAvgTransactionsByAgeRange = (labels,data,ctx) =>{
     labels:labels,
     datasets: [{
       label: 'Male',
-      backgroundColor: 'red',
-      borderColor: 'red',
-      borderWidth: 1,
+      backgroundColor: "#4e73df",
+      hoverBackgroundColor: "#2e59d9",
+      borderColor: "#4e73df",
       data: data.dataSetMale
     }, {
       label: 'Female',
-      backgroundColor: 'blue',
-      borderColor: 'blue',
+      backgroundColor: "#info",
+      hoverBackgroundColor: "black",
+      borderColor: "gray-dark",
       data: data.dataSetFemale
     }]},
     options: {
@@ -146,46 +220,101 @@ const drawAvgTransactionsByAgeRange = (labels,data,ctx) =>{
         }
       },
       responsive: true,
-      legend: {
-        position: 'right',
-      },
       title: {
         display: true,
-        text: 'Average Transactions by Age Range'
+        text: 'Avg Transactions by Age Range',
+        padding: 20
+      },
+      scales: {
+        yAxes: [{
+          time: {
+            unit: 'Age Range'
+          },
+          gridLines: {
+            display: false,
+            drawBorder: false
+          },
+          ticks: {
+            maxTicksLimit: 6
+          },
+          maxBarThickness: 25,
+        }],
+        xAxes: [{
+          display: false,
+          drawBorder: true,
+          ticks: {
+            maxTicksLimit: 5,
+            padding: 10,
+            // Include a dollar sign in the ticks
+          },
+          gridLines: {
+            color: "rgb(234, 236, 244)",
+            zeroLineColor: "rgb(234, 236, 244)",
+            drawBorder: false,
+            borderDash: [2],
+            zeroLineBorderDash: [2]
+          }
+        }],
+      },
+      maintainAspectRatio: false,
+      layout: {
+        padding: {
+          left: 0,
+          right: 0,
+          top: 0,
+          bottom: 0
+        }
+      },
+      legend: {
+        display: false
+      },
+      tooltips: {
+        titleMarginBottom: 10,
+        titleFontColor: '#6e707e',
+        titleFontSize: 14,
+        backgroundColor: "rgb(255,255,255)",
+        bodyFontColor: "#858796",
+        borderColor: '#dddfeb',
+        borderWidth: 1,
+        xPadding: 15,
+        yPadding: 15,
+        displayColors: false,
+        caretPadding: 10,
       }
     }
   });
 }
 
 const drawMerchantsByCategories = (labels,data,ctx) => {
-  var myDoughnut = new Chart(ctx,{
+  console.log(labels)
+  var myPieChart = new Chart(ctx, {
     type: 'doughnut',
     data: {
-      labels: labels,
+      labels: transformData(labels,placesLabel),
       datasets: [{
         data: data,
-        // cambiar esto por un random de colores
-        backgroundColor: ['red','blue','yellow','lightblue','pink','grey','darkGrey','darkcyan','green','limegreen','orange','orangered','lightcoral','lightpink','lightsalmon'],
+        backgroundColor: ['#4e73df', '#1cc88a', '#36b9cc','purple','pink','primary','secondary','gray-dark','warning','dark','info','orange','indigo','blue','cyan'],
+        hoverBackgroundColor: ['#2e59d9', '#17a673', '#2c9faf'],
+        hoverBorderColor: "rgba(234, 236, 244, 1)",
       }],
     },
     options: {
-      responsive: true,
+      maintainAspectRatio: false,
+      tooltips: {
+        backgroundColor: "rgb(255,255,255)",
+        bodyFontColor: "#858796",
+        borderColor: '#dddfeb',
+        borderWidth: 1,
+        xPadding: 15,
+        yPadding: 15,
+        displayColors: false,
+        caretPadding: 10,
+      },
       legend: {
-        position: 'top',
         display: false
       },
-      title: {
-        display: true,
-        text: 'Merchants By Categories'
-      },
-      animation: {
-        animateScale: true,
-        animateRotate: true
-      },
-      scaleLabels: {
-        labelString:'Percentage'
-      }
-    }
+      cutoutPercentage: 80,
+    },
   })
 }
 

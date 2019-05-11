@@ -2,97 +2,97 @@ module.exports.places = [
 	{
 		bbva: 'auto',
 		google: 'tiendas de coches',
-		charter: 'Coches',
+		charter: 'Cars',
 		fa: 'fa-car'
 	},
 	{
 		bbva: 'barsandrestaurants',
 		google: 'Bares y Restaurantes',
-		charter: 'Bares y Restaurantes',
+		charter: 'Bar y Restaurants',
 		fa: 'fa-glass-cheers'
 	},
 	{
 		bbva: 'contents',
 		google: 'contenidos',
-		charter: 'Contenidos',
+		charter: 'Contents',
 		fa: 'fa-boxes'
 	},
 	{
 		bbva: 'fashion',
 		google: 'fashion',
-		charter: 'fashion',
+		charter: 'Fashion',
 		fa: 'fa-tshirt'
 	},
 	{
 		bbva: 'food',
 		google: 'comida',
-		charter: 'Comida',
+		charter: 'Food',
 		fa: 'fa-hamburger'
 	},
 	{
 		bbva: 'health',
 		google: 'centros de salud',
-		charter: 'Salud',
+		charter: 'Health',
 		fa: 'fa-heart'
 	},
 	{
 		bbva: 'home',
 		google: 'Casas',
-		charter: 'Casas',
+		charter: 'Home',
 		fa: 'fa-home'
 	},
 	{
 		bbva: 'hotelservices',
 		google: 'Hoteles',
-		charter: 'Hoteles',
+		charter: 'Hotels',
 		fa: 'fa-hotel'
 	},
 	{
 		bbva: 'hyper',
 		google: 'hyper',
-		charter: 'Supermercados',
+		charter: 'Supermarket',
 		fa: 'fa-store'
 	},
 	{
 		bbva: 'leisure',
 		google: 'ocio',
-		charter: 'Ocio',
+		charter: 'Leisure',
 		fa: 'fa-couch'
 	},
 	{
 		bbva: 'otherservices',
 		google: 'Otros servicios',
-		charter: 'Otros servicios',
+		charter: 'Other services',
 		fa: 'fa-comments-dollar'
 	},
 	{
 		bbva: 'sportsandtoys',
 		google: 'tiendas de deporte',
-		charter: 'Tiendas de deporte',
+		charter: 'Sport',
 		fa: 'fa-futbol'
 	},
 	{
 		bbva: 'tech',
 		google: 'tecnología',
-		charter: 'Tecnología',
+		charter: 'Tech',
 		fa: 'fa-tv'
 	},
 	{
 		bbva: 'transportation',
 		google: 'Transporte',
-		charter: 'Transporte',
+		charter: 'Transportation',
 		fa: 'fa-car-side'
 	},
 	{
 		bbva: 'travel',
 		google: 'viajes',
-		charter: 'Viajes',
+		charter: 'Travel',
 		fa: 'fa-luggage-cart'
 	},
 	{
 		bbva: 'wellnessandbeauty',
 		google: 'salud y belleza',
-		charter: 'Salud & Belleza',
+		charter: 'Wellness & Beauty',
 		fa: 'fa-american-sign-language-interpreting'
 	},
 	{
