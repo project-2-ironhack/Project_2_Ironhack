@@ -34,11 +34,10 @@ const transformData = (arr,keyConverter) => {
 
 
 const drawAvgTransactionsValueByPeriod = (labels,data,ctx) => {
-  console.log(transformMonth(labels))
     var myBarChart = new Chart(ctx, {
       type: 'bar',
       data: {
-        labels: transformMonth(labels),
+        labels: transformData(labels,monthLabel),
         datasets: [{
           label: "Avg. Trans. Value",
           backgroundColor: "#4e73df",
@@ -55,9 +54,9 @@ const drawAvgTransactionsValueByPeriod = (labels,data,ctx) => {
         maintainAspectRatio: false,
         layout: {
           padding: {
-            left: 10,
-            right: 25,
-            top: 25,
+            left: 0,
+            right: 0,
+            top: 0,
             bottom: 0
           }
         },
@@ -78,7 +77,7 @@ const drawAvgTransactionsValueByPeriod = (labels,data,ctx) => {
           yAxes: [{
             ticks: {
               min: 0,
-              max: 50,
+              max: Math.ceil(Math.max(...data)/10)*10,
               maxTicksLimit: 5,
               padding: 10,
               // Include a dollar sign in the ticks
