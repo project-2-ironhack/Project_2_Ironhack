@@ -52,14 +52,13 @@ module.exports.settingUpdate = (req, res, next) => {
       }
     })
     .catch((error) => {
-      if (error instanceof mongoose.Error.ValidationError) {
+      console.log(error)
+      if (error instanceof mongoose.Error.ValidationError || true) {
         res.redirect(url.format({
-          pathname:`dashboard/${query._id}`,
+          pathname:`/dashboard/${query._id}`,
           query: {
-              "a": 1,
-              "b": 2,
-              "valid":"your string here"
-            }
+            error: 'Zip Code Invalid'
+          }
         }));
       } else {
         next(error);
