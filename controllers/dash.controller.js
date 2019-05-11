@@ -15,12 +15,9 @@ module.exports.display = (req,res,next) => {
           const apiParamNeeded = apiParams.find(graphParams => graphParams.name === graph)
           return bbvaService.getData({min: query.minDate, max: query.maxDate}, apiParamNeeded.apiParam, query.zipCode )
         })
-        
 
         const className = query.graph.length > 2 ? 'col-6' : 'col-12'
         
-
-
         Promise.all(promises)
           .then((queries) => {
             console.log(query)

@@ -7833,6 +7833,7 @@ form.user .btn-user {
   clip: rect(0, 900px, 0, 0);
   animation: noise-anim 2s infinite linear alternate-reverse; }
 
+<<<<<<< HEAD
 @keyframes noise-anim-2 {
   0% {
     clip: rect(74px, 9999px, 31px, 0); }
@@ -7877,6 +7878,8 @@ form.user .btn-user {
   100% {
     clip: rect(6px, 9999px, 86px, 0); } }
 
+=======
+>>>>>>> e4e79fb263b18436dfb93d705a298844d9b3eb2a
 .error:before {
   content: attr(data-text);
   position: absolute;
@@ -7886,8 +7889,7 @@ form.user .btn-user {
   color: #5a5c69;
   background: #f8f9fc;
   overflow: hidden;
-  clip: rect(0, 900px, 0, 0);
-  animation: noise-anim-2 3s infinite linear alternate-reverse; }
+  clip: rect(0, 900px, 0, 0); }
 
 footer.sticky-footer {
   padding: 2rem 0;
@@ -7901,5 +7903,9 @@ body.sidebar-toggled footer.sticky-footer {
 
 .navbar {
   z-index: 10; }
+
+#sidebarForm {
+  max-height: 400px;
+  overflow-y: scroll; }
 
 /*# sourceMappingURL=style.css.map */
