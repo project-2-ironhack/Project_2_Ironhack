@@ -6,6 +6,7 @@ const ZipCodes = require('./../models/zipCodes.model');
 const apiParams = require('./../constants').API_PARAMS
 
 module.exports.display = (req,res,next) => {    
+  
   Query.findById(req.params.id)
     .then(query => {
       if (query) { 
@@ -46,19 +47,3 @@ module.exports.display = (req,res,next) => {
     })
     .catch(error => next(error));
 }
-
-// module.exports.display = (req,res,next) => {
- 
-//   const promises = req.body.graphs.map((graph) => {
-//     const apiParamNeeded = apiParams.filter(graphParams => graphParams.name === graph.type)
-//     console.log(apiParamNeeded[0].apiParam)
-//     return bbvaService.getData({min: '201501', max: '201512'},apiParamNeeded[0].apiParam)
-//   })
-
-//   Promise.all(promises)
-//     .then((queries) => {
-//       const graphs = queries.map((info, i) => {
-//         return Object.assign( req.body.graphs[i],{data:JSON.stringify(info)})});
-//       res.render('dashboard/list', { dashboard:true, graphs })
-//     })
-//     .catch(error => next(error))

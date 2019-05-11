@@ -3,13 +3,14 @@ const mongoose = require('mongoose')
 const passport = require('passport');
 
 module.exports.register = (req,res,next) => {
-  res.render('auth/register')
+  res.render('auth/register', {authentication: true})
 }
 
 module.exports.doRegister = (req,res,next) => {
   function renderWithErrors(errors) {
     res.render('auth/register', {
       user: req.body,
+      authentication: true,
       errors: errors
     })
   }
@@ -34,7 +35,7 @@ module.exports.doRegister = (req,res,next) => {
 }
 
 module.exports.login = (req,res,next) => {
-  res.render('auth/login')
+  res.render('auth/login', {authentication: true})
 }
 
 module.exports.doLogin = (req, res, next) => {
@@ -44,6 +45,7 @@ module.exports.doLogin = (req, res, next) => {
     } else if (!user){ 
       res.render('auth/login', { 
         user: req.body,
+        authentication: true,
         errors: validation 
       })
     } else { 
