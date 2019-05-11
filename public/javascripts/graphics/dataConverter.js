@@ -78,7 +78,7 @@ const estSalesByCategory = (params,ctx) => {
     const totalTransValue = params.reduce((acc,date) =>{
       return acc + date.zipcodes[0].categories[i].avg*date.zipcodes[0].categories[i].txs
     },0)
-    graphData.push((totalTransValue/0,172).toFixed(2))
+    graphData.push((totalTransValue/(0.172)).toFixed(2))
   }) 
   drawEstSalesByCategory(graphLabel,graphData,ctx)
 }
