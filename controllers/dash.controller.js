@@ -27,7 +27,8 @@ module.exports.display = (req,res,next) => {
             ZipCodes.findOne({name:query.zipCode})
               .then((zipCode)=>{
                 const zipCodeCoords = encodeURI(JSON.stringify(zipCode))
-                Place.find({'properties.postalCode' : zipCode.name, 'properties.type' : query.establecimiento})
+                // , 'properties.types' : query.establecimiento}
+                Place.find({'properties.postalCode' : zipCode.name})
                   .then(placeData => {
                     const places = encodeURI(JSON.stringify(placeData))
                     res.render('dashboard/list', { 
