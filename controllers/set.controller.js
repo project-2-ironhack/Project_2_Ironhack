@@ -3,6 +3,7 @@ const categories = require('./../constants').API_PARAMS.map(e=>e.name)
 const mongoose = require('mongoose');
 const ZipCodes = require('./../models/zipCodes.model');
 const Query = require('../models/query.model');
+const url = require('url');    
 
 module.exports.create = (req,res,next) => {
   ZipCodes.find()
@@ -50,5 +51,18 @@ module.exports.settingUpdate = (req, res, next) => {
         next(createError(404, 'Cant update'))
       }
     })
-    .catch(next)
+    .catch((error) => {
+      if (error instanceof mongoose.Error.ValidationError) {
+        res.redirect(url.format({
+          pathname:`dashboard/${query._id}`,
+          query: {
+              "a": 1,
+              "b": 2,
+              "valid":"your string here"
+            }
+        }));
+      } else {
+        next(error);
+      }
+    })
 }
