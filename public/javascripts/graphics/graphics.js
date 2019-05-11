@@ -246,7 +246,7 @@ const drawAvgTransactionsByAgeRange = (labels,data,ctx) =>{
           },
           gridLines: {
             display: false,
-            drawBorder: false
+            drawBorder: false,
           },
           ticks: {
             maxTicksLimit: 6
@@ -451,14 +451,13 @@ const drawAvgTransactionsValueByCategory = (labels,data,ctx) => {
       }]
     },
     options: {
-      
       responsive: true,
       legend: {
         display: false,
       },
       title: {
         display: true,
-        text: 'Average Transaction Velue By Category',
+        text: 'Average Transaction Value By Category',
         padding: 20
       },
       elements: {
@@ -466,8 +465,12 @@ const drawAvgTransactionsValueByCategory = (labels,data,ctx) => {
           tension: 0.0,
         }
       },
+
       scale: {
         beginAtZero: true,
+        ticks:{
+          display: false,
+        },
       },
       maintainAspectRatio: false,
       layout: {

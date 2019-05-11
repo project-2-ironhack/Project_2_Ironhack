@@ -23,3 +23,7 @@ body {
 .graphs-table.row {
   height:100%
 }
+
+.col-6.four {
+  height :50%
+}
