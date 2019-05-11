@@ -4,9 +4,11 @@
       {{>map}}
     </div>
     <div class='col color-white'>
-        <div class='graphs-table'>
+        <div class='graphs-table row'>
         {{#each graphs as |graph|}}
-          <canvas id={{graph.type}} data-params={{graph.data}} class="graphs"></canvas>
+        <div class="{{../className}}">
+          <canvas id={{graph.type}} data-params={{graph.data}} class="graphs "></canvas>
+        </div>
         {{/each}}
       </div>
     </div>
