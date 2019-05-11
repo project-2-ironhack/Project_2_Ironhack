@@ -7857,8 +7857,11 @@ body.sidebar-toggled footer.sticky-footer {
   z-index: 10; }
 
 #sidebarForm .overflow {
-  max-height: 400px;
+  max-height: 380px;
   overflow-y: scroll;
   overflow-x: hidden; }
+
+.toggled #sidebarForm .hideOnToggle {
+  display: none; }
 
 /*# sourceMappingURL=style.css.map */

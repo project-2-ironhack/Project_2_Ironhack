@@ -24,7 +24,7 @@
       {{#if dashboard}} 
         <!-- Heading -->
         <div class="sidebar-heading">
-          Establecimientos
+          Places of interest
         </div>
         <form id="sidebarForm" action="/set/{{query._id}}" method="POST">
           <div class="overflow">
@@ -32,16 +32,23 @@
               <!-- Nav Item - Charts -->
               <li class="nav-item">
                 <span class="nav-link py-1">
+                  <i class="fas fa-fw {{place.fa}} "></i>
+                  <label for="graph-{{place}}" class="form-check-label p-0 col-8 hideOnToggle">{{place.charter}}</label>
                   <input name="establecimiento" class="" type="checkbox" value="{{place.bbva}}"
                     {{#hasQueryCategory ../query place.bbva }}checked="checked"{{/hasQueryCategory}}> 
-                  <label for="graph-{{place}}" class="form-check-label p-0 col-8">{{place.charter}}</label>
-                  <i class="fas fa-fw {{place.fa}} "></i>
                 </span>
               </li>
             {{/each}}
           </div>
-          <div class="text-center col-12 mb-2">
-            <button type="submit" class="btn btn-primary mr-3">Submit</button>
+                <hr class="sidebar-divider">
+
+          <div class="text-center col-12 mb-2 ">
+            <button type="submit" class="btn btn-success btn-icon-split">
+              <span class="icon text-white-50">
+                <i class="fas fa-check"></i>
+              </span>
+              <span class="text hideOnToggle">Submit</span>
+            </button>
           </div>
         </form>
       {{/if}}
