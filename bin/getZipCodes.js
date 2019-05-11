@@ -4,6 +4,16 @@ const mongoose = require('mongoose');
 const GOOGLE_API = process.env.PLACES_API_KEY
 const ZC = require('./../models/zipCodes.model');
 
+const randomIntFromInterval = (min,max) => {
+    return Math.floor(Math.random()*(max-min)+min);
+}
+
+const numberWithDot = (x) => {
+  var parts = x.toString().split(".");
+  parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+  return parts.join(".");
+}
+
 // const settingModel = require('./../helpers/mapsParser').ZipCodesSchema
 module.exports.importZipCodes  = list => {  
   // ** Connect to database. 
@@ -63,6 +73,9 @@ const mappingZipCodes = (data, name) => {
         types : obj.types[0],
         city: 'Madrid',
         country: 'Spain',
+        gdpPerCapita:`€${numberWithDot(randomIntFromInterval(20000,30000))}`,
+        population: `${numberWithDot(randomIntFromInterval(50000,75000))}`,
+        unemploymentRate: `${numberWithDot(randomIntFromInterval(0,20))}%`
       }
         // }
     })

@@ -15,29 +15,54 @@ const avgTransactionsValueByPeriod = (params,ctx) => {
 
 const avgTransactionsByAgeRange = (params,ctx) => {
   const graphLabel = params[0].zipcodes[0].ages.map(ageRange=> ageRange.id)
-  graphLabel.shift()
+  
   const graphData = {
     dataSetMale: [],
     dataSetFemale:[]
   }
 
-  graphLabel.forEach((_,i) => {
-    const maleDataValue = params.reduce((acc,date) =>{
-      return acc + date.zipcodes[0].ages[i+1].genders[1].avg*date.zipcodes[0].ages[i+1].genders[1].txs
-    },0)
-    const maleDataTotal = params.reduce((acc,date) =>{
-      return acc + date.zipcodes[0].ages[i+1].genders[1].txs
-    },0)
-    graphData.dataSetMale.push((maleDataValue/maleDataTotal).toFixed(2))
-    
-    const femaleDataValue = params.reduce((acc,date) =>{
-      return acc + date.zipcodes[0].ages[i+1].genders[1].avg*date.zipcodes[0].ages[i+1].genders[0].txs
-    },0)
-    const femaleDataTotal = params.reduce((acc,date) =>{
-      return acc + date.zipcodes[0].ages[i+1].genders[0].txs
-    },0)
-    graphData.dataSetFemale.push((-femaleDataValue/femaleDataTotal).toFixed(2))
-  }) 
+  if(graphLabel[0] === 'Unknown') {
+    graphLabel.shift()
+    graphLabel.forEach((_,i) => {
+      const maleDataValue = params.reduce((acc,date) =>{
+        return acc + date.zipcodes[0].ages[i+1].genders[1].avg*date.zipcodes[0].ages[i+1].genders[1].txs
+      },0)
+      const maleDataTotal = params.reduce((acc,date) =>{
+        return acc + date.zipcodes[0].ages[i+1].genders[1].txs
+      },0)
+      graphData.dataSetMale.push((maleDataValue/maleDataTotal).toFixed(2))
+      
+      const femaleDataValue = params.reduce((acc,date) =>{
+        return acc + date.zipcodes[0].ages[i+1].genders[1].avg*date.zipcodes[0].ages[i+1].genders[0].txs
+      },0)
+      const femaleDataTotal = params.reduce((acc,date) =>{
+        return acc + date.zipcodes[0].ages[i+1].genders[0].txs
+      },0)
+      graphData.dataSetFemale.push((-femaleDataValue/femaleDataTotal).toFixed(2))
+    }) 
+  } else {
+    if(graphLabel[graphLabel.length -1] === 'filtered') {
+      graphLabel.pop()
+    }
+    graphLabel.forEach((_,i) => {
+      const maleDataValue = params.reduce((acc,date) =>{
+        return acc + date.zipcodes[0].ages[i].genders[1].avg*date.zipcodes[0].ages[i].genders[1].txs
+      },0)
+      const maleDataTotal = params.reduce((acc,date) =>{
+        return acc + date.zipcodes[0].ages[i].genders[1].txs
+      },0)
+      graphData.dataSetMale.push((maleDataValue/maleDataTotal).toFixed(2))
+      
+      const femaleDataValue = params.reduce((acc,date) =>{
+        return acc + date.zipcodes[0].ages[i].genders[1].avg*date.zipcodes[0].ages[i].genders[0].txs
+      },0)
+      const femaleDataTotal = params.reduce((acc,date) =>{
+        return acc + date.zipcodes[0].ages[i].genders[0].txs
+      },0)
+      graphData.dataSetFemale.push((-femaleDataValue/femaleDataTotal).toFixed(2))
+    }) 
+  }
+
   drawAvgTransactionsByAgeRange(graphLabel,graphData,ctx)
 }
   

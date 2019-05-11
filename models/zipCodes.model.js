@@ -21,6 +21,9 @@ const zipCodesSchema = new mongoose.Schema({
     types : String,
     city: String,
     country: String,
+    gdpPerCapita: String,
+    population: String,
+    unemploymentRate: String
   }
 },{ timestamps: true })
 

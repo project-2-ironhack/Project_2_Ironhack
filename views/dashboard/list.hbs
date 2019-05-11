@@ -4,9 +4,9 @@
       {{>map}}
     </div>
     <div class='col'>
-        <div class='graphs-table row'>
+        <div class='graphs-table row justify-content-around'>
         {{#each graphs as |graph|}}
-        <div class="{{../className}}">
+        <div class="{{../className}} four">
           <canvas id={{graph.type}} data-params={{graph.data}} class="graphs "></canvas>
         </div>
         {{/each}}
