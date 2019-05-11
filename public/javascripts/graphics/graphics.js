@@ -114,18 +114,13 @@ const drawAvgTransactionsValueByPeriod = (labels,data,ctx) => {
         labels: transformData(labels,monthLabel),
         datasets: [{
           label: "Avg. Trans. Value",
-          backgroundColor: "#c6d5ec",
+          backgroundColor: "#4e73df",
           hoverBackgroundColor: "#2e59d9",
           borderColor: "#4e73df",
           data: data,
         }],
       },
       options: {
-        elements: {
-          rectangle: {
-            borderWidth: 2,
-          },
-        },
         responsive: true,
         title: {
           display: true,

@@ -27,6 +27,12 @@ module.exports.display = (req,res,next) => {
             ZipCodes.findOne({name:query.zipCode})
               .then((zipCode)=>{
                 const zipCodeCoords = encodeURI(JSON.stringify(zipCode))
+                const ticketData = {
+                  "gdp": zipCode.properties.gdpPerCapita,
+                  "population": zipCode.properties.population,
+                  "unemploymentRate": zipCode.properties.unemploymentRate
+                }
+                console.log(ticketData)
                 // , 'properties.types' : query.establecimiento}
                 Place.find({'properties.postalCode' : zipCode.name})
                   .then(placeData => {
@@ -40,7 +46,9 @@ module.exports.display = (req,res,next) => {
                       zipCodeCoords, 
                       placesObj,
                       token,
-                      className
+                      className,
+                      tPOI:placeData.length,
+                      ticketData,
                     })
                   })
               })

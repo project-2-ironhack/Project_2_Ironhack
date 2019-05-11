@@ -1,18 +1,105 @@
 <div class='main-container'>
-  <div class='row row-wrapper'>
-    <div class='col'>
-      {{>map}}
-    </div>
-    <div class='col'>
-        <div class='graphs-table row justify-content-around'>
-        {{#each graphs as |graph|}}
-        <div class="{{../className}} four">
-          <canvas id={{graph.type}} data-params={{graph.data}} class="graphs "></canvas>
+  <div class="row justify-content-around ticket-container">
+    <div class="col-xl-3 col-md-6 mb-4 mt-4">
+      <div class="card border-left-success shadow h-100 py-2">
+        <div class="card-body">
+          <div class="row no-gutters align-items-center">
+            <div class="col mr-2">
+              <div class="text-xs font-weight-bold text-success text-uppercase mb-1">GDP PER CAPITA</div>
+              <div class="h5 mb-0 font-weight-bold text-gray-800">{{ticketData.gdp}}</div>
+            </div>
+            <div class="col-auto">
+              <i class="fas fa-euro-sign fa-2x text-gray-300"></i>
+            </div>
+          </div>
         </div>
-        {{/each}}
       </div>
     </div>
+
+    <div class="col-xl-3 col-md-6 mb-4 mt-4">
+      <div class="card border-left-primary shadow h-100 py-2">
+        <div class="card-body">
+          <div class="row no-gutters align-items-center">
+            <div class="col mr-2">
+              <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">POPULATION</div>
+              <div class="h5 mb-0 font-weight-bold text-gray-800">{{ticketData.population}}</div>
+            </div>
+            <div class="col-auto">
+              <i class="fas fa-users fa-2x text-gray-300"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xl-3 col-md-6 mb-4 mt-4">
+        <div class="card border-left-warning shadow h-100 py-2">
+          <div class="card-body">
+            <div class="row no-gutters align-items-center">
+              <div class="col mr-2">
+                <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">UNEMPLOYMENT RATE</div>
+                <div class="h5 mb-0 font-weight-bold text-gray-800">{{ticketData.unemploymentRate}}</div>
+              </div>
+              <div class="col-auto">
+                <i class="fas fa-percent fa-2x text-gray-300"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-3 col-md-6 mb-4 mt-4">
+        <div class="card border-left-info shadow h-100 py-2">
+          <div class="card-body">
+            <div class="row no-gutters align-items-center">
+              <div class="col mr-2">
+                <div class="text-xs font-weight-bold text-info text-uppercase mb-1">TOTAL POINTS OF INTERES</div>
+                <div class="row no-gutters align-items-center">
+                  <div class="col-auto">
+                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{tPOI}}</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-auto">
+                <i class="fas fa-map-marker-alt fa-2x text-gray-300"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>  
+    </div>
+
+  <div class='row'>
+    <div class='col'>
+      <div class='card shadow mb-4 p-0'>
+        <div class="card-header py-3 d-inline-flex align-items-center"> 
+          <i class="fas fa-map-marked-alt fa-2x mr-4"></i>
+          <h6 class="m-0 font-weight-bold text-primary"> POINTS OF INTEREST</h6>    
+        </div>
+        <div class="card-body row-wrapper p-0">
+          {{>map}}
+        </div>
+      </div>
+      
+
+    </div>
+    <div class='col'>
+      <div class='card shadow mb-4 p-0'>
+        <div class="card-header py-3 d-inline-flex align-items-center"> 
+            <i class="fas fa-chart-area fa-2x mr-4"></i>  
+            <h6 class="m-0 font-weight-bold text-primary"> CHARTS</h6>    
+        </div>
+        <div class="card-body row-wrapper p-3">
+          <div class='graphs-table row justify-content-around'>
+            {{#each graphs as |graph|}}
+            <div class="{{../className}} four">
+              <canvas id={{graph.type}} data-params={{graph.data}} class="graphs "></canvas>
+            </div>
+            {{/each}}
+          </div>
+        </div>
+    </div>
   </div>
+</div>
 </div>
 
 
