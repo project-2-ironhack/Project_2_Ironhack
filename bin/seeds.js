@@ -4,11 +4,11 @@ const postalCode = require('./../data/postalCodes');
 
 //?$: npm run seeds -what=something
 
-if(what === 'PC'){
-  console.log(`Okey, dude, we will search ${postalCode.pc.length} postal codes from Madrid.`);
-  const importPlaces = require('./getPlaces').importPlaces
-  importPlaces(postalCode.pc, what)
-} else {
+// if(what === 'PC'){
+//   console.log(`Okey, dude, we will search ${postalCode.pc.length} postal codes from Madrid.`);
+//   const importPlaces = require('./getPlaces').importPlaces
+//   importPlaces(postalCode.pc, what)
+// } else {
   const importZipCodes = require('./getZipCodes').importZipCodes
   importZipCodes(postalCode.pc)
-}
+// }
