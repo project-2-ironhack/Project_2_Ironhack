@@ -14,7 +14,7 @@
 
       <!-- Nav Item - Dashboard -->
       <li class="nav-item active">
-        <a class="nav-link" href="/set">
+        <a class="nav-link " href="/set">
           <i class="fas fa-search fa-search-alt"></i>
           <span>New Search</span></a>
       </li>
@@ -32,9 +32,9 @@
           {{#each placesObj as |place|}}
             <!-- Nav Item - Charts -->
             <li class="nav-item">
-              <span class="nav-link">
+              <span class="nav-link ">
                 <i class="fas fa-fw {{place.fa}}"></i>
-                <label for="graph-{{place}}" class="form-check-label col-8">{{place.charter}}</label>
+                <label for="graph-{{place}}" class="form-check-label p-0 col-6">{{place.charter}}</label>
                 <input id="graph-{{place}}" name="graph[type]" class="" type="checkbox" value="{{place.bbva}}" > 
               </span>
             </li>
