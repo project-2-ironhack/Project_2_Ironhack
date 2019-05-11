@@ -25,7 +25,11 @@
 }
 
 #sidebarForm .overflow {
-  max-height: 400px;
+  max-height: 380px;
   overflow-y: scroll;
   overflow-x: hidden;
+}
+
+.toggled #sidebarForm .hideOnToggle {
+  display: none;
 }
