@@ -114,13 +114,18 @@ const drawAvgTransactionsValueByPeriod = (labels,data,ctx) => {
         labels: transformData(labels,monthLabel),
         datasets: [{
           label: "Avg. Trans. Value",
-          backgroundColor: "#4e73df",
+          backgroundColor: "#c6d5ec",
           hoverBackgroundColor: "#2e59d9",
           borderColor: "#4e73df",
           data: data,
         }],
       },
       options: {
+        elements: {
+          rectangle: {
+            borderWidth: 2,
+          },
+        },
         responsive: true,
         title: {
           display: true,
@@ -143,12 +148,16 @@ const drawAvgTransactionsValueByPeriod = (labels,data,ctx) => {
             },
             gridLines: {
               display: false,
-              drawBorder: true
+              drawBorder: true,           
+              lineWidth: 2,
+              color: 'dark-gray'
             },
             ticks: {
-              maxTicksLimit: 6
+              maxTicksLimit: 6,
+              display: false
             },
             maxBarThickness: 25,
+            display: true
           }],
           yAxes: [{
             display: false,
@@ -211,8 +220,9 @@ const drawAvgTransactionsByAgeRange = (labels,data,ctx) =>{
     }, {
       label: 'Female',
       backgroundColor: "#info",
-      hoverBackgroundColor: "black",
+      hoverBackgroundColor: 'black',
       borderColor: "gray-dark",
+      hoverBorderColor:'black',
       data: data.dataSetFemale
     }]},
     options: {
@@ -296,8 +306,6 @@ const drawAvgTransactionsByAgeRange = (labels,data,ctx) =>{
 }
 
 const drawMerchantsByCategories = (labels,data,ctx) => {
-
-
   var myPieChart = new Chart(ctx, {
     type: 'doughnut',
     data: {
@@ -329,45 +337,104 @@ const drawMerchantsByCategories = (labels,data,ctx) => {
         display: false
       },
       cutoutPercentage: 60,
-
+      responsive: true
     },
   })
 }
 
 const drawEstSalesByCategory = (labels,data,ctx) => {
+  console.log(data)
   var myBarChart = new Chart(ctx, {
     type: 'bar',
     data: {
-      labels: labels,
-        datasets: [{
-          backgroundColor: 'rgb(255, 99, 132)',
-          borderColor: 'rgb(255, 99, 132)',
-          data: data
-      }]},
+      labels: transformData(labels,placesLabel),
+      datasets: [{
+        label: "Revenue per Category",
+        backgroundColor: generateRandomBlue(data),
+        hoverBackgroundColor: "#2e59d9",
+        borderColor: "#4e73df",
+        data: data,
+      }],
+    },
     options: {
-      scales: {
-          xAxes: [{
-              barPercentage: 0.5,
-              barThickness: 10,
-              maxBarThickness: 10,
-              minBarLength: 0,
-          }],
-          yAxes: [{
-              ticks: {
-                beginAtZero: true
-              }
-          }]
-      },
       responsive: true,
-      legend: {
-        position: 'right',
-        display: false
-      },
       title: {
         display: true,
-        text: 'Average Transactions by Age Range'
-      }
-  }
+        text: 'Revenue per Category',
+        padding: 20
+      },
+      maintainAspectRatio: false,
+      layout: {
+        padding: {
+          left: 0,
+          right: 0,
+          top: 0,
+          bottom: 0
+        }
+      },
+      scales: {
+        xAxes: [{
+          time: {
+            unit: 'Category'
+          },
+          gridLines: {
+            display: false,
+            drawBorder: true,
+            lineWidth: 2,
+            color: 'dark-gray'
+          },
+          drawBorder: true,
+          ticks: {
+            maxTicksLimit: 6,
+            display: false
+          },
+          maxBarThickness: 25,
+          display: true,
+        }],
+        yAxes: [{
+          display: false,
+          ticks: {
+            min: 0,
+            max: Math.max(...data),
+            maxTicksLimit: 5,
+            padding: 10,
+            // Include a dollar sign in the ticks
+            callback: function(value, index, values) {
+              return '€' + number_format(value);
+            }
+          },
+          gridLines: {
+            color: "rgb(234, 236, 244)",
+            zeroLineColor: "rgb(234, 236, 244)",
+            drawBorder: false,
+            borderDash: [2],
+            zeroLineBorderDash: [2]
+          }
+        }],
+      },
+      legend: {
+        display: false
+      },
+      tooltips: {
+        titleMarginBottom: 10,
+        titleFontColor: '#6e707e',
+        titleFontSize: 14,
+        backgroundColor: "rgb(255,255,255)",
+        bodyFontColor: "#858796",
+        borderColor: '#dddfeb',
+        borderWidth: 1,
+        xPadding: 15,
+        yPadding: 15,
+        displayColors: false,
+        caretPadding: 10,
+        callbacks: {
+          label: function(tooltipItem, chart) {
+            var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
+            return datasetLabel + ': €' + number_format(tooltipItem.yLabel);
+          }
+        }
+      },
+    }
   });
 }
 
@@ -375,18 +442,24 @@ const drawAvgTransactionsValueByCategory = (labels,data,ctx) => {
   var myRadar = new Chart(ctx,{
     type: 'radar',
     data: {
-      labels: labels,
+      labels: transformData(labels,placesLabel),
       datasets: [{
-        borderColor: 'lightcoral',
-        backgroundColor: 'red',
-        pointBackgroundColor: 'lightcoral',
+        borderColor: '#4e73df',
+        backgroundColor: '#c6d5ec',
+        pointBackgroundColor: '#4e73df',
         data: data
       }]
     },
     options: {
+      
+      responsive: true,
+      legend: {
+        display: false,
+      },
       title: {
         display: true,
-        text: 'Average Transaction Velue By Category'
+        text: 'Average Transaction Velue By Category',
+        padding: 20
       },
       elements: {
         line: {
@@ -395,6 +468,34 @@ const drawAvgTransactionsValueByCategory = (labels,data,ctx) => {
       },
       scale: {
         beginAtZero: true,
+      },
+      maintainAspectRatio: false,
+      layout: {
+        padding: {
+          left: 0,
+          right: 0,
+          top: 0,
+          bottom: 0
+        }
+      },
+      tooltips: {
+        titleMarginBottom: 10,
+        titleFontColor: '#6e707e',
+        titleFontSize: 14,
+        backgroundColor: "rgb(255,255,255)",
+        bodyFontColor: "#858796",
+        borderColor: '#dddfeb',
+        borderWidth: 1,
+        xPadding: 15,
+        yPadding: 15,
+        displayColors: false,
+        caretPadding: 10,
+        callbacks: {
+          label: function(tooltipItem, chart) {
+            var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
+            return datasetLabel + ': €' + number_format(tooltipItem.yLabel);
+          }
+        }
       }
     }
   })
