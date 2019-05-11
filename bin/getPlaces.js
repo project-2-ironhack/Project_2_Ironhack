@@ -45,16 +45,16 @@ const getPlaces = (where, what) => {
                       .then(newData=>{
                         data = [...data, ...newData.data]                                    
                         console.log(`we found ${data.length} elements for ${where} in the third page`)
-                        return importPlaces(data)
+                        return importPlaces(data, what)
                       })    
                   )
                 } else {
-                  return importPlaces(data)
+                  return importPlaces(data, what)
                 }
               })
           )
         } else {
-          return importPlaces(data)
+          return importPlaces(data, what)
         }
       })
   )
@@ -81,7 +81,7 @@ const  sleeper = delay => {
   return (x) => new Promise(resolve => setTimeout(() => resolve(x), delay));
 }
 
-const mappingPlaces = data => {
+const mappingPlaces = (data, what) => {
   const pc = (string) => string.match(/28(\d+){3}/)[0] 
   return data.map( e => {
     return new Place({
@@ -100,7 +100,7 @@ const mappingPlaces = data => {
         address: e.formatted_address,
         googleId: e.id,
         priceLevel : e.price_level,
-        types : e.types,
+        types : what,
         postalCode: pc(e.formatted_address),
         city: 'Madrid',
         country: 'Spain',

@@ -28,17 +28,19 @@
           Establecimientos
         </div>
         <form id="sidebarForm" action="/set/{{query._id}}" method="POST">
-          {{#each placesObj as |place|}}
-            <!-- Nav Item - Charts -->
-            <li class="nav-item">
-              <span class="nav-link py-1">
-                <input name="establecimiento" class="" type="checkbox" value="{{place.bbva}}"
-                  {{#hasQueryCategory ../query place.bbva }}checked="checked"{{/hasQueryCategory}}> 
-                <label for="graph-{{place}}" class="form-check-label p-0 col-6">{{place.charter}}</label>
-                <i class="fas fa-fw {{place.fa}}"></i>
-              </span>
-            </li>
-          {{/each}}
+          <div class="overflow">
+            {{#each placesObj as |place|}}
+              <!-- Nav Item - Charts -->
+              <li class="nav-item">
+                <span class="nav-link py-1">
+                  <input name="establecimiento" class="" type="checkbox" value="{{place.bbva}}"
+                    {{#hasQueryCategory ../query place.bbva }}checked="checked"{{/hasQueryCategory}}> 
+                  <label for="graph-{{place}}" class="form-check-label p-0 col-8">{{place.charter}}</label>
+                  <i class="fas fa-fw {{place.fa}} "></i>
+                </span>
+              </li>
+            {{/each}}
+          </div>
           <div class="text-center col-12 mb-2">
             <button type="submit" class="btn btn-primary mr-3">Submit</button>
           </div>
