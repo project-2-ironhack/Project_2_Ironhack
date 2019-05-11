@@ -6,8 +6,7 @@ const ZipCodes = require('./../models/zipCodes.model');
 const apiParams = require('./../constants').API_PARAMS
 const placesObj = require('./../data/establecimientos').places
 
-module.exports.display = (req,res,next) => {    
-  
+module.exports.display = (req,res,next) => {      
   Query.findById(req.params.id)
     .then(query => {
       if (query) { 
@@ -20,7 +19,6 @@ module.exports.display = (req,res,next) => {
         
         Promise.all(promises)
           .then((queries) => {
-            console.log(query)
             const graphs = queries.map((info, i) => {
               //graphType ponerlo bonito
               const graphType = { type: query.graph[i]}
@@ -28,14 +26,14 @@ module.exports.display = (req,res,next) => {
             });
             ZipCodes.findOne({name:query.zipCode})
               .then((zipCode)=>{
-                console.log(zipCode)
                 const zipCodeCoords = encodeURI(JSON.stringify(zipCode))
-                Place.find({'properties.postalCode' : zipCode.name})
+                Place.find({'properties.postalCode' : zipCode.name, 'properties.type' : query.establecimiento})
                   .then(placeData => {
                     const places = encodeURI(JSON.stringify(placeData))
                     res.render('dashboard/list', { 
                       showMap: true,
                       dashboard:true, 
+                      query,
                       graphs, 
                       places, 
                       zipCodeCoords, 

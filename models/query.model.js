@@ -4,7 +4,7 @@ const queryModel = new mongoose.Schema({
   zipCode: Number, 
   minDate: Number, 
   maxDate: Number, 
-  establecimiento: String, 
+  establecimiento: [String], 
   graph: [{
     type: String, 
     // enum : []
