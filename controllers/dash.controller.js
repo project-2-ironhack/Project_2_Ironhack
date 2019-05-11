@@ -44,7 +44,9 @@ module.exports.display = (req,res,next) => {
                     })
                   })
               })
+              .catch(err => console.error(`Error en el zipcode${err}`))
           })
+          .catch(next)
       } else {
         res.redirect('/set')
       }
