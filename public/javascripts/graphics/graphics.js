@@ -99,6 +99,10 @@ const monthLabel = [{name: 'Jan', data:'201501'},{name: 'Feb', data:'201502'},{n
 	},
 ]
 
+const generateRandomBlue = (data) => {
+  return data.map(_ => "rgb(0, 0, " + (Math.floor(Math.random() * 255)) + ","+Math.random()+")")
+}
+
 const transformData = (arr,keyConverter) => {
   return keyConverter.filter(key => arr.includes(key.data)).map(dateObject => dateObject.name) 
 }
@@ -280,25 +284,37 @@ const drawAvgTransactionsByAgeRange = (labels,data,ctx) =>{
         yPadding: 15,
         displayColors: false,
         caretPadding: 10,
+        callbacks: {
+          label: function(tooltipItem, chart) {
+            var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
+            return datasetLabel + ': €' + number_format(tooltipItem.xLabel);
+          }
+        }
       }
     }
   });
 }
 
 const drawMerchantsByCategories = (labels,data,ctx) => {
-  console.log(labels)
+
+
   var myPieChart = new Chart(ctx, {
     type: 'doughnut',
     data: {
       labels: transformData(labels,placesLabel),
       datasets: [{
         data: data,
-        backgroundColor: ['#4e73df', '#1cc88a', '#36b9cc','purple','pink','primary','secondary','gray-dark','warning','dark','info','orange','indigo','blue','cyan'],
-        hoverBackgroundColor: ['#2e59d9', '#17a673', '#2c9faf'],
+        backgroundColor: generateRandomBlue(data),
+        hoverBackgroundColor:'lightgray',
         hoverBorderColor: "rgba(234, 236, 244, 1)",
       }],
     },
     options: {
+      title: {
+        display: true,
+        text: 'Merchants by Category',
+        padding: 20
+      },
       maintainAspectRatio: false,
       tooltips: {
         backgroundColor: "rgb(255,255,255)",
@@ -308,12 +324,12 @@ const drawMerchantsByCategories = (labels,data,ctx) => {
         xPadding: 15,
         yPadding: 15,
         displayColors: false,
-        caretPadding: 10,
       },
       legend: {
         display: false
       },
-      cutoutPercentage: 80,
+      cutoutPercentage: 60,
+
     },
   })
 }
