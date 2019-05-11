@@ -11,7 +11,9 @@ const queryModel = new mongoose.Schema({
   graph: [{
     type: String, 
     // enum : []
-  }]
+  }], 
+  userId: { type: mongoose.Types.ObjectId, ref: 'User' }
+
 },{ timestamps: true });
 
 const Query = mongoose.model('Query', queryModel);
