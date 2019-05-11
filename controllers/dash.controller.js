@@ -4,6 +4,7 @@ const token =  process.env.MAPBOX_TOKEN || 'pk.eyJ1IjoidmFscm9iIiwiYSI6ImNqdXBvZ
 const Place = require('../models/places.model');
 const ZipCodes = require('./../models/zipCodes.model');
 const apiParams = require('./../constants').API_PARAMS
+const placesObj = require('./../data/establecimientos').places
 
 module.exports.display = (req,res,next) => {    
   
@@ -36,7 +37,8 @@ module.exports.display = (req,res,next) => {
                       graphs, 
                       places, 
                       zipCodeCoords, 
-                      token
+                      token, 
+                      placesObj
                     })
                   })
               })

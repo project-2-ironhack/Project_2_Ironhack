@@ -3,7 +3,7 @@ module.exports.places = [
 		bbva: 'auto',
 		google: 'tiendas de coches',
 		charter: 'Coches',
-		fa: 'fa-car-side'
+		fa: 'fa-car'
 	},
 	{
 		bbva: 'barsandrestaurants',
@@ -81,24 +81,24 @@ module.exports.places = [
 		bbva: 'transportation',
 		google: 'Transporte',
 		charter: 'Transporte',
-		fa: 'fa-'
+		fa: 'fa-car-side'
 	},
 	{
 		bbva: 'travel',
 		google: 'viajes',
 		charter: 'Viajes',
-		fa: 'fa-'
+		fa: 'fa-luggage-cart'
 	},
 	{
 		bbva: 'wellnessandbeauty',
 		google: 'salud y belleza',
 		charter: 'Salud & Belleza',
-		fa: 'fa-'
+		fa: 'fa-american-sign-language-interpreting'
 	},
 	{
 		bbva: 'filtered',
 		google: 'filtros',
 		charter: 'Filtros',
-		fa: 'fa-'
+		fa: 'fa-filter'
 	},
 ]
