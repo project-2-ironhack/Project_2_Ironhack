@@ -41,3 +41,14 @@ module.exports.settingUp = (req, res, next) => {
       });
 }
 
+module.exports.settingUpdate = (req, res, next) => {
+  Query.findByIdAndUpdate(req.params.id, req.body, )
+    .then((query) => {
+      if (query) {
+        res.redirect(`/dashboard/${query._id}`)
+      } else {
+        next(createError(404, 'Cant update'))
+      }
+    })
+    .catch(next)
+}
