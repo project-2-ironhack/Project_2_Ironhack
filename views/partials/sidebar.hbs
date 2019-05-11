@@ -22,19 +22,29 @@
       <!-- Divider -->
       <hr class="sidebar-divider">
 
-      <!-- Heading -->
-      <div class="sidebar-heading">
-        Establecimientos
-      </div>
+      {{#if dashboard}} 
+        <!-- Heading -->
+        <div class="sidebar-heading">
+          Establecimientos
+        </div>
+        <form id="sidebarForm" action="set" method="POST">
 
-      <!-- Nav Item - Charts -->
-      <li class="nav-item">
-        <a class="nav-link" href="charts.html">
-          <i class="fas fa-fw fa-chart-area"></i>
-          <span>Charts</span></a>
-      </li>
+          {{#each placesObj as |place|}}
+            <!-- Nav Item - Charts -->
+            <li class="nav-item">
+              <span class="nav-link">
+                <i class="fas fa-fw {{place.fa}}"></i>
+                <label for="graph-{{place}}" class="form-check-label col-8">{{place.charter}}</label>
+                <input id="graph-{{place}}" name="graph[type]" class="" type="checkbox" value="{{place.bbva}}" > 
+              </span>
+            </li>
+          {{/each}}
+          <div class="text-center col-12 mb-2">
+            <button type="submit" class="btn btn-primary mr-3">Submit</button>
+          </div>
+        </form>
+      {{/if}}
 
-      
       <!-- Sidebar Toggler (Sidebar) -->
       <div class="text-center d-none d-md-inline">
         <button class="rounded-circle border-0" id="sidebarToggle"></button>
