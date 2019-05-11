@@ -18,13 +18,14 @@ module.exports.create = (req,res,next) => {
 }
 
 module.exports.settingUp = (req, res, next) => {
-    // res.json(req.body)
+    console.log(req.session)
     const query = new Query({
       zipCode: req.body.config.zipCode,
       minDate: '2015' + req.body.config.min_date,
       maxDate: '2015' + req.body.config.max_date,
       establecimiento: req.body.config.type,
-      graph: req.body.graph.type
+      graph: req.body.graph.type, 
+      userId: req.session.passport.user
     })
     query.save()
       .then(() => res.redirect(`/dashboard/${query._id}`))
