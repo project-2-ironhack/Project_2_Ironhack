@@ -36,5 +36,12 @@
   <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   {{!-- Custom scripts for all pages --}}
   <script src="/javascripts/sb-admin-2.js"></script>
+  <script type="application/javascript">
+    jQuery('.custom-file-input').on('change', function() { 
+      let fileName = jQuery(this).val().split('\\').pop(); 
+      jQuery(this).next('.custom-file-label').addClass("selected").html(fileName); 
+    });
+  </script>
+
   </body>
 </html>

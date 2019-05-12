@@ -17,12 +17,8 @@ const authRouter = require('./routes/auth.routes');
 const userRouter = require('./routes/user.routes');
 const placesRouter = require('./routes/places.routes')
 const mapsRouter = require('./routes/maps.routes')
-// const placesRouter = require('./routes/places.routes')
 const dashBoardRouter = require('./routes/dash.routes')
 const setRouter = require('./routes/set.routes')
-
-
-
 
 const app = express();
 
