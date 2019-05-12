@@ -1,5 +1,6 @@
 const placesObj = require('./../data/establecimientos').places
-const categories = require('./../constants').API_PARAMS.map(e=>e.name)
+// const categories = require('./../constants').API_PARAMS.map(e=>e.name)
+const categories = require('./../constants').API_PARAMS
 const mongoose = require('mongoose');
 const ZipCodes = require('./../models/zipCodes.model');
 const Query = require('../models/query.model');
@@ -11,7 +12,8 @@ module.exports.create = (req,res,next) => {
       res.render('set/form', {
         types : placesObj, 
         categories, 
-        zipCodes : arrZipCodes.map(e => e.name)
+        zipCodes : arrZipCodes.map(e => e.name),
+        showForm: true
       })
     })
     .catch(next)
@@ -35,7 +37,8 @@ module.exports.settingUp = (req, res, next) => {
             query,
             kinds, categories, zipCodes,
             ...error, 
-            showGoogleMap:true
+            showGoogleMap:true,
+            showForm: true
           })
         } else {
           next(error)

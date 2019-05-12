@@ -33,7 +33,7 @@ const avgTransactionsByAgeRange = (params,ctx) => {
       graphData.dataSetMale.push((maleDataValue/maleDataTotal).toFixed(2))
       
       const femaleDataValue = params.reduce((acc,date) =>{
-        return acc + date.zipcodes[0].ages[i+1].genders[1].avg*date.zipcodes[0].ages[i+1].genders[0].txs
+        return acc + date.zipcodes[0].ages[i+1].genders[0].avg*date.zipcodes[0].ages[i+1].genders[0].txs
       },0)
       const femaleDataTotal = params.reduce((acc,date) =>{
         return acc + date.zipcodes[0].ages[i+1].genders[0].txs
@@ -54,7 +54,7 @@ const avgTransactionsByAgeRange = (params,ctx) => {
       graphData.dataSetMale.push((maleDataValue/maleDataTotal).toFixed(2))
       
       const femaleDataValue = params.reduce((acc,date) =>{
-        return acc + date.zipcodes[0].ages[i].genders[1].avg*date.zipcodes[0].ages[i].genders[0].txs
+        return acc + date.zipcodes[0].ages[i].genders[0].avg*date.zipcodes[0].ages[i].genders[0].txs
       },0)
       const femaleDataTotal = params.reduce((acc,date) =>{
         return acc + date.zipcodes[0].ages[i].genders[0].txs

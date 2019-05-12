@@ -35,7 +35,7 @@ const monthLabel = [{name: 'Jan', data:'201501'},{name: 'Feb', data:'201502'},{n
 	},
 	{
 		data: 'es_barsandrestaurants',
-		name: 'Bar y Restaurants',
+		name: 'Bar & Restaurants',
 	},
 	{
 		data: 'es_contents',
@@ -231,7 +231,7 @@ const drawAvgTransactionsByAgeRange = (labels,data,ctx) =>{
       responsive: true,
       title: {
         display: true,
-        text: 'Avg Transactions by Age Range',
+        text: 'Avg. Transactions by Age Range',
         padding: 20
       },
       scales: {
@@ -452,7 +452,7 @@ const drawAvgTransactionsValueByCategory = (labels,data,ctx) => {
       },
       title: {
         display: true,
-        text: 'Average Transaction Value By Category',
+        text: 'Avg. Transaction Value By Category',
         padding: 20
       },
       elements: {
