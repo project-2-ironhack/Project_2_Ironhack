@@ -73,9 +73,10 @@ const merchantsByCategories = (params,ctx) => {
   graphLabel.pop()
   
   const totalMerchantsAllCategories = []
-  graphLabel.forEach((_,i) => {
+  graphLabel.forEach((label) => {
     const totalMerchantsCategory = params.reduce((acc,date) => {
-      return typeof date.zipcodes[0].categories[i].merchants === 'number' ? acc + date.zipcodes[0].categories[i].merchants : acc+0
+      const categoryData = date.zipcodes[0].categories.filter(category => category.id === label)
+      return categoryData.length === 1 ? acc + categoryData[0].merchants : acc+0
     },0)
     totalMerchantsAllCategories.push(totalMerchantsCategory)
   })
@@ -83,7 +84,6 @@ const merchantsByCategories = (params,ctx) => {
   const totalMerchants = totalMerchantsAllCategories.reduce((acc,merchants) => {
     return acc + merchants
   },0)
-
   //tocar esto para mostrar porcentajes
 
   const graphData = totalMerchantsAllCategories.map(merchants => {
@@ -99,9 +99,10 @@ const estSalesByCategory = (params,ctx) => {
   graphLabel.pop()  
   const graphData = []
 
-  graphLabel.forEach((_,i) => {
+  graphLabel.forEach((label) => {
     const totalTransValue = params.reduce((acc,date) =>{
-      return acc + date.zipcodes[0].categories[i].avg*date.zipcodes[0].categories[i].txs
+      const categoryData = date.zipcodes[0].categories.filter(category => category.id === label)
+      return categoryData.length === 1 ? acc + categoryData[0].avg*categoryData[0].txs : acc+0
     },0)
     graphData.push((totalTransValue/(0.172)).toFixed(2))
   }) 
@@ -114,12 +115,14 @@ const avgTransactionsValueByCategory = (params,ctx) => {
 
   const graphData =[]
 
-  graphLabel.forEach((_,i) => {
+  graphLabel.forEach((label) => {
     const totalTransValue = params.reduce((acc,date) =>{
-      return acc + date.zipcodes[0].categories[i].avg*date.zipcodes[0].categories[i].txs
+      const categoryData = date.zipcodes[0].categories.filter(category => category.id === label)
+      return categoryData.length === 1 ? acc + categoryData[0].avg*categoryData[0].txs : acc+0
     },0)
     const totalTrans = params.reduce((acc,date) =>{
-      return acc + date.zipcodes[0].categories[i].txs
+      const categoryData = date.zipcodes[0].categories.filter(category => category.id === label)
+      return categoryData.length === 1 ? acc + categoryData[0].txs : acc+0
     },0)
     graphData.push((totalTransValue/totalTrans).toFixed(2))
   }) 
