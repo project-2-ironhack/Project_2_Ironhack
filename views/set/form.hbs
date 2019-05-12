@@ -1,65 +1,160 @@
     <div class="main-set-container row">
     <div class="float-left form-container">
       <form action="set" method="POST">
-      <h5>Configuraciones de busquedas</h5>
-        <div class="form-group">
-          <label>Zip Code</label>
-          <select name="config[zipCode]" class="form-control">
-            <option value="28004" disabled selected>Seleccionar un código postal</option>
-            {{#each zipCodes as |zc|}}
-              <option value="{{zc}}">
-                {{zc}}
-              </option>
-            {{/each}}     
-          </select>
-        </div>
-        <div class="form-group">
-          <div class="row">
-            <div class="form-group col-6">
-              <label>Fecha mínimca <small>en meses</small></label>
-              <input type="text" value='01' class="form-control" name="config[min_date]" placeholder="01" min="0set1" max="12">
+      <h4 class='mb-4 -mt-1'>SEARCH CONFIGURATION</h4>
+      <div class='row'>
+        <div class='col'>
+          <div class="card shadow mb-4 p-0">
+              <div class="card-header py-3 d-inline-flex align-items-center"> 
+                  <i class="fas fa-search-location fa-2x mr-4"></i>  
+                  <h6 class="m-0 font-weight-bold text-success">PARAMS</h6>    
             </div>
+            <div class="p-4">
+              <div class="mb-4">
+                <div class="card border-left-success shadow h-100 py-2">
+                  <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                      <div class="col mr-2">
+                        <label class="text-xs font-weight-bold text-success text-uppercase mb-1">ZIP CODE</label>
+                        <div class='h5 mb-0 font-weight-bold text-gray-800'>
+                          <select name="config[zipCode]" class='form-control' style="width:250px;">
+                            <option value="28004" disabled selected>Zipcode</option>
+                            {{#each zipCodes as |zc|}}
+                              <option value="{{zc}}">
+                                {{zc}}
+                              </option>
+                            {{/each}}     
+                          </select>
+                        </div>
 
-            <div class="form-group col-6">
-              <label>Fecha máxima <small>en meses</small></label>
-              <input type="text" value='12' class="form-controsetl" name="config[max_date]" placeholder="12" min="0set1" max="12">
-            </div>
-          </div>
-        </div>
-        <div class="form-group">
-          <label>Establecimiento</label>
-          <select name="config[type]" class="form-control">
-              <option value="" disabled selected>Seleccionar un gráfico</option>
-            {{#each types as |type|}}
-              <option value="{{type.bbva}}">
-                {{type.charter}}
-              </option>
-            {{/each}} 
-          </select>
-        </div>
-        <hr>
-        <div class="form-group">
-          <h5>Gráficas de interes</h5>
-          <label>Tipo de gráfico</label>
-          <div class='row'>
-            {{#each categories as |graph|}}
-             <div class="card mb-4 py-3 border-bottom-primary col-6">
-                <div class="card-body charts-options form-check row ">
-                    <i class="fas {{graph.fa}} "></i>
-                    <label for="graph-{{graph.name}}" class="form-check-label p-0">{{graph.displayName}}</label>
-                    <input id="graph-{{graph.name}}" name="graph[type]" class="form-check-input"
-                      type="checkbox" value="{{graph.name}}" > 
+                      </div>
+                      <div class="col-auto">
+                        <i class="fas fa-map-signs fa-2x"></i>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
-            {{/each}}
+
+              <div class="mb-4">
+                <div class="card border-left-success shadow h-100 py-2">
+                  <div class="card-body">
+                    <div class="row no-gutters align-items-start">
+                      <div class="col mr-2">
+                        <label class="text-xs font-weight-bold text-success text-uppercase mb-1">DATE FRAME</label>
+                        <div class='h5 mb-0 font-weight-bold text-gray-800'>
+                  
+                            <div>
+                              <label class='date-label'>From:</label>
+                              <input type="text" value='01' class="form-control" name="config[min_date]" placeholder="01" min="0set1" max="12" style="width:250px;">
+                            </div>
+
+                            <div class='mt-2'>
+                              <label class='date-label'>To:</label>
+                              <input type="text" value='12' class="form-control" name="config[max_date]" placeholder="12" min="0set1" max="12" style="width:250px;">
+        
+                          </div>
+                        </div>
+
+                      </div>
+                      <div class="col-auto">
+                        <i class="fas fa-calendar-alt fa-2x"></i>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="mb-4">
+                <div class="card border-left-success shadow h-100 py-2">
+                  <div class="card-body">
+                    <div class="row no-gutters align-items-start">
+                      <div class="col mr-2">
+                        <label class="text-xs font-weight-bold text-success text-uppercase mb-1">POINTS OF INTEREST</label>
+                        <div class='h5 mb-0 font-weight-bold text-gray-800'>
+                  
+                          <div class="places-container align-items-center pl-0 pr-0">
+                              {{#each placesObj as |place|}}
+                                <!-- Nav Item - Charts -->
+                            
+                                  <div class="place-container row justity-content-center align-items-center pt-2 pb-2 pr-4 pl-4" >
+                                    <i class="fas fa-fw {{place.fa}} col-4 p-0"></i>
+                                    <label for="graph-{{place}}" class=" poi-label col-4 m-0 p-0">{{place.charter}}</label>
+                                    <input name="establecimiento" class="col-4 tocheck" type="checkbox" value="{{place.bbva}}"> 
+                                  </div>
+                           
+                              {{/each}}
+                            </div>
+                        </div>
+
+                      </div>
+                      <div class="col-auto">
+                        <i class="fas fa-map-marked-alt fa-2x"></i>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {{!-- <div class="form-group">
+                <label>Establecimiento</label>
+                <select name="config[type]" class="form-control">
+                    <option value="" disabled selected>Seleccionar un gráfico</option>
+                  {{#each types as |type|}}
+                    <option value="{{type.bbva}}">
+                      {{type.charter}}
+                    </option>
+                  {{/each}} 
+                </select>
+              </div> --}}
+            </div>
+            </div>
+
+        </div>
+
+        <div class='col'>
+          <div class="card shadow mb-4 p-0 ">
+              <div class="card-header py-3 d-inline-flex align-items-center"> 
+                    <i class="fas fa-chart-area fa-2x mr-4"></i>  
+                    <h6 class="m-0 font-weight-bold text-primary"> CHARTS</h6>    
+                </div>
+                <div class='p-4'>
+                  {{#each categories as |graph|}}
+                    <div class="card mb-4 py-3 border-bottom-primary m-1">
+                      <div class="card-body row d-inline-flex pt-2 pb-2 pr-0 pl-0 justify-content-around align-items-center">
+                        <div  class="p-0">
+                          <i class="fas {{graph.fa}} fa-2x"></i>
+                        </div>
+                          <label for="graph-{{graph.name}}" class="p-0 m-0 col-4 graph-text">{{graph.displayName}}</label>
+                          <input id="graph-{{graph.name}}" name="graph[type]" class="p-0 m-0"
+                            type="checkbox" value="{{graph.name}}" > 
+                      </div>
+                    </div>
+                  {{/each}}
+                </div>
+            </div>
+            <div class="text-center col-12 mb-2 ">
+              <button type="submit" class="btn btn-success btn-icon-split">
+                <span class="icon text-white-50">
+                  <i class="fas fa-check"></i>
+                </span>
+                <span class="text">Submit</span>
+              </button>
+            </div>
+
           </div>
-
         </div>
 
-        <div class="d-flex">
-          <button type="submit" class="btn btn-primary mr-3">Submit</button>
-          {{!-- <a class="btn btn-secondary" href="/places">Back</a> --}}
-        </div>
+     
+
+          {{!-- <div class="text-center col-12 mb-2 ">
+            <button type="submit" class="btn btn-success btn-icon-split">
+              <span class="icon text-white-50">
+                <i class="fas fa-check"></i>
+              </span>
+              <span class="text">Submit</span>
+            </button>
+          </div> --}}
       </form>
     </div>
     <div class="float-left right-img">

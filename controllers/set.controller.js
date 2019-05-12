@@ -10,7 +10,7 @@ module.exports.create = (req,res,next) => {
   ZipCodes.find()
     .then(arrZipCodes => {
       res.render('set/form', {
-        types : placesObj, 
+        placesObj, 
         categories, 
         zipCodes : arrZipCodes.map(e => e.name),
         showForm: true

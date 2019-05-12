@@ -22,6 +22,38 @@ body {
   padding-left: 2%;
 }
 
-.charts-options {
-  padding:0
+
+
+.graph-text {
+  font-size: 14px;
 }
+
+.middle {
+  margin-left: 45%
+}
+
+select.form-control {
+  font-size: 10px
+}
+
+input.form-control {
+  font-size: 10px
+}
+
+.date-label {
+  font-size: 12px
+}
+
+.poi-label {
+  font-size: 10px;
+  
+}
+
+.places-container {
+  padding-top: 15px
+}
+
+.place-container {
+  width:100%
+}
+
