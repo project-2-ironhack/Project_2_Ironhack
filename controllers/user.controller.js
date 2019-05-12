@@ -1,6 +1,4 @@
-const User = require('../models/user.model')
 const mongoose = require('mongoose')
-const passport = require('passport');
 
 module.exports.profile = (req,res,next) => {
   res.render('auth/profile')
@@ -15,9 +13,9 @@ module.exports.doProfile = (req, res, next) => {
     req.body.avatarURL = req.file.secure_url;
   }
 
-  const user = req.user;
-  Object.assign(user, req.body);
-  user.save()
+  const User = req.user;
+  Object.assign(User, req.body);
+  User.save()
     .then(user => res.redirect('/profile'))
     .catch(error => {
       if (error instanceof mongoose.Error.ValidationError) {
