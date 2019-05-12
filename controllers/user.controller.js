@@ -6,27 +6,25 @@ module.exports.profile = (req,res,next) => {
   res.render('auth/profile')
 }
 
-module.exports.doProfile = (req,res,next) => {
-  function renderWithErrors(errors) {
-    res.render('auth/register', {
-      user: req.body,
-      errors: errors
-    })
+module.exports.doProfile = (req, res, next) => {
+  if (!req.body.password) {
+    delete req.body.password;
   }
 
-  User.findOne({ email: req.body.email })
-    .then(user => {
-      if (user) {
-        renderWithErrors({ email: 'Email already registered'})
-      } else {
-        user = new User(req.body);
-        return user.save()
-          .then(user => res.redirect('/login'))
-      }
-    })
+  if (req.file) {
+    req.body.avatarURL = req.file.secure_url;
+  }
+
+  const user = req.user;
+  Object.assign(user, req.body);
+  user.save()
+    .then(user => res.redirect('/profile'))
     .catch(error => {
       if (error instanceof mongoose.Error.ValidationError) {
-        renderWithErrors(error.errors)
+        res.render('auth/profile', {
+          user: req.body,
+          errors: error.errors
+        })
       } else {
         next(error);
       }
