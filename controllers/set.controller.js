@@ -20,12 +20,12 @@ module.exports.create = (req,res,next) => {
 }
 
 module.exports.settingUp = (req, res, next) => {
-    console.log(req.session)
+    console.log(req.body.establecimiento)
     const query = new Query({
       zipCode: req.body.config.zipCode,
       minDate: '2015' + req.body.config.min_date,
       maxDate: '2015' + req.body.config.max_date,
-      establecimiento: req.body.config.type,
+      establecimiento: req.body.establecimiento,
       graph: req.body.graph.type, 
       userId: req.session.passport.user
     })
