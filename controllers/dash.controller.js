@@ -34,7 +34,7 @@ module.exports.display = (req,res,next) => {
                 }
                 console.log(ticketData)
                 // , 'properties.types' : query.establecimiento}
-                Place.find({'properties.postalCode' : zipCode.name})
+                Place.find({'properties.postalCode' : zipCode.name })
                   .then(placeData => {
                     const places = encodeURI(JSON.stringify(placeData))
                     res.render('dashboard/list', { 
