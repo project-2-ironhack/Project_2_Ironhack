@@ -12,7 +12,10 @@ const placeSchema = new mongoose.Schema({
     address : String,
     googleId: String,
     priceLevel: String,
-    types : String,
+    types : [{
+      type: String,
+      required: true
+    }],
     postalCode: String,
     city: String,
     country: String,

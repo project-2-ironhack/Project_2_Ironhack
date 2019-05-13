@@ -34,7 +34,6 @@ module.exports.display = (req,res,next) => {
                 }
                 console.log(ticketData)
                 // , 'properties.types' : query.establecimiento}
-                console.log(query.establecimiento)
                 Place.find({'properties.postalCode' : zipCode.name})
                   .then(placeData => {
                     console.log(placeData[9].properties)
